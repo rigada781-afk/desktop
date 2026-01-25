@@ -1,11 +1,20 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, Tray, Menu } from "electron";
+import { app, BrowserWindow, Tray, Menu, ipcMain } from "electron";
+import electronUpdater from "electron-updater";
+import log from "electron-log";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const isMac = process.platform === "darwin";
+const UPDATE_FLAG = path.join(app.getPath("userData"), "update.json");
+const autoUpdater = electronUpdater.autoUpdater;
+
+log.initialize();
+Object.assign(console, log.functions);
+Menu.setApplicationMenu(null);
 
 let mainWindow = null;
 let tray = null;
@@ -30,6 +39,7 @@ function showWindow() {
       wins[0].focus();
     }
   } else {
+    if (mainWindow.isMinimized()) mainWindow.restore();
     mainWindow.show();
     mainWindow.focus();
   }
@@ -57,13 +67,14 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    icon: path.join(__dirname, "assets/icons/filled/icon.ico"),
+    backgroundColor: "#000000",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
   mainWindow.loadURL("https://vumeto.samy0f.com");
-  // mainWindow.loadFile("index.html");
 
   mainWindow.on("close", (event) => {
     if (!isMac && !isQuitting) {
@@ -76,29 +87,45 @@ function createWindow() {
   // mainWindow.webContents.openDevTools()
 }
 
+function initializeApp() {
+  createWindow();
+  createTray();
+  autoUpdater.autoDownload = true;
+  autoUpdater.checkForUpdates();
+
+  if (fs.existsSync(UPDATE_FLAG)) {
+    fs.unlinkSync(UPDATE_FLAG);
+    autoUpdater.quitAndInstall();
+  }
+}
+
 const gotTheLock = app.requestSingleInstanceLock();
 
 if (!isMac) {
   if (!gotTheLock) {
     app.quit();
   } else {
-    app.on("second-instance", (event, commandLine, workingDirectory) => {
+    app.on("second-instance", (event, argv, workingDirectory) => {
       // Someone tried to run a second instance, we should focus our window.
-      if (mainWindow) {
-        if (mainWindow.isMinimized()) mainWindow.restore();
-        mainWindow.focus();
+      showWindow();
+
+      const deepLink = argv.find((arg) => arg.startsWith("vumeto-desktop://"));
+
+      if (deepLink) {
+        const path = deepLink.split("vumeto-desktop://")[1];
+
+        log.info(`Received deep link: ${deepLink}, path: ${path}`);
+        mainWindow.webContents.send("deep-link", { path, deepLink });
       }
     });
 
     app.whenReady().then(() => {
-      createWindow();
-      createTray();
+      initializeApp();
     });
   }
 } else {
   app.whenReady().then(() => {
-    createWindow();
-    createTray();
+    initializeApp();
   });
 }
 
@@ -116,5 +143,43 @@ app.on("activate", function () {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+/* Update Check */
+
+autoUpdater.on("checking-for-update", () => {
+  log.info("Checking for update...");
+});
+
+autoUpdater.on("update-available", () => {
+  log.info("Update available");
+});
+
+autoUpdater.on("update-not-available", () => {
+  log.info("Update not available");
+});
+
+autoUpdater.on("error", (error) => {
+  log.error("Error checking for update", error);
+});
+
+autoUpdater.on("download-progress", (progress) => {
+  log.info(
+    `Download progress: ${progress.percent}% (${progress.bytesPerSecond} bytes/s)`
+  );
+  ipcMain.send("update-download-progress", progress);
+});
+
+autoUpdater.on("update-downloaded", () => {
+  log.info("Update downloaded");
+  update.state = "update-downloaded";
+  fs.writeFileSync(UPDATE_FLAG, "ready");
+
+  if (mainWindow) {
+    mainWindow.webContents.send("update-ready");
+  }
+});
+
+ipcMain.handle("install-update", () => {
+  isQuitting = true;
+  fs.unlinkSync(UPDATE_FLAG);
+  autoUpdater.quitAndInstall();
+});

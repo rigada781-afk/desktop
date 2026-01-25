@@ -1,8 +1,12 @@
-/**
- * The preload script runs before `index.html` is loaded
- * in the renderer. It has access to web APIs as well as
- * Electron's renderer process modules and some polyfilled
- * Node.js functions.
- *
- * https://www.electronjs.org/docs/latest/tutorial/sandbox
- */
+import { contextBridge, ipcRenderer } from "electron";
+
+contextBridge.exposeInMainWorld("updater", {
+  onReady: (callback) => ipcRenderer.on("update-ready", callback),
+  onDownloadProgress: (callback) =>
+    ipcRenderer.on("update-download-progress", callback),
+  install: () => ipcRenderer.invoke("install-update"),
+});
+
+contextBridge.exposeInMainWorld("deepLink", {
+  onReceived: (callback) => ipcRenderer.on("deep-link", callback),
+});

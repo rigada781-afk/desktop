@@ -27,13 +27,13 @@ Vumeto is an anime scraping site that collects and displays anime content from m
 2. Install dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
 3. Run the application:
 
 ```bash
-npm start
+bun start
 ```
 
 ## Development

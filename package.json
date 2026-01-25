@@ -1,11 +1,52 @@
 {
   "name": "vumeto",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "The official desktop application for Vumeto - an anime streaming platform that aggregates content from various sources.",
   "main": "main.js",
+  "build": {
+    "appId": "com.vumeto.app",
+    "productName": "Vumeto",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "icon": "assets/icons/filled/icon.ico",
+      "target": "nsis"
+    },
+    "mac": {
+      "icon": "assets/icons/filled/icon.icns"
+    },
+    "linux": {
+      "icon": "assets/icons/filled"
+    },
+    "protocols": [
+      {
+        "name": "Vumeto Desktop Protocol",
+        "schemes": [
+          "vumeto-desktop"
+        ]
+      }
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "vumeto",
+        "repo": "desktop"
+      }
+    ],
+    "files": [
+      "**/*",
+      "!.gitignore",
+      "!README.md",
+      "!LICENSE",
+      "!node_modules/**/*",
+      "!build/**/*"
+    ]
+  },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "repository": "https://github.com/vumeto/desktop",
   "keywords": [
@@ -18,6 +59,12 @@
   "author": "GitHub",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^40.0.0"
+    "electron": "^40.0.0",
+    "electron-builder": "^26.4.0"
+  },
+  "dependencies": {
+    "electron-log": "^5.4.3",
+    "electron-updater": "^6.7.3",
+    "update-electron-app": "^3.1.2"
   }
 }
