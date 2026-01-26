@@ -1,6 +1,6 @@
 {
   "name": "vumeto",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "The official desktop application for Vumeto - an anime streaming platform that aggregates content from various sources.",
   "main": "main.js",
@@ -32,7 +32,8 @@
       {
         "provider": "github",
         "owner": "vumeto",
-        "repo": "desktop"
+        "repo": "desktop",
+        "releaseType": "release"
       }
     ],
     "files": [

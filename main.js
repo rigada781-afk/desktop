@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 const isMac = process.platform === "darwin";
 const UPDATE_FLAG = path.join(app.getPath("userData"), "update.json");
 const autoUpdater = electronUpdater.autoUpdater;
+const isDev = !app.isPackaged;
 
 log.initialize();
 Object.assign(console, log.functions);
@@ -30,6 +31,13 @@ if (process.defaultApp) {
   app.setAsDefaultProtocolClient("vumeto-desktop");
 }
 
+function getAssetPath(...paths) {
+  if (!isDev) {
+    return path.join(process.resourcesPath, ...paths);
+  }
+  return path.join(__dirname, ...paths);
+}
+
 function showWindow() {
   if (!mainWindow) {
     const wins = BrowserWindow.getAllWindows();
@@ -46,8 +54,10 @@ function showWindow() {
 }
 
 function createTray() {
-  tray = new Tray(path.join(__dirname, "/assets/icons/transparant/16.png"));
-  tray.setToolTip("Vumeto");
+  const iconPath = getAssetPath("assets", "icons", "transparant", "16.png");
+
+  tray = new Tray(iconPath);
+  tray.setToolTip(`Vumeto v${app.getVersion()}`);
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -93,7 +103,7 @@ function createWindow() {
   // });
 
   mainWindow.webContents.setUserAgent(
-    "VumetoDesktop/1.0 " + mainWindow.webContents.getUserAgent()
+    `VumetoDesktop/${app.getVersion()} ${mainWindow.webContents.getUserAgent()}`
   );
 
   mainWindow.on("close", (event) => {
@@ -105,8 +115,9 @@ function createWindow() {
   });
 
   // Open the DevTools.
-
-  // mainWindow.webContents.openDevTools();
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
 }
 
 function initializeApp() {
@@ -241,4 +252,8 @@ ipcMain.handle("install-update", () => {
   isQuitting = true;
   fs.unlinkSync(UPDATE_FLAG);
   autoUpdater.quitAndInstall();
+});
+
+ipcMain.handle("get-app-version", () => {
+  return app.getVersion();
 });

@@ -18,4 +18,5 @@ contextBridge.exposeInMainWorld("env", {
 
 contextBridge.exposeInMainWorld("app", {
   onWindowClose: (callback) => ipcRenderer.on("window-close", callback),
+  getAppVersion: () => ipcRenderer.invoke("get-app-version"),
 });
