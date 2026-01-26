@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from "electron";
+const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("updater", {
   onReady: (callback) => ipcRenderer.on("update-ready", callback),
@@ -9,4 +9,13 @@ contextBridge.exposeInMainWorld("updater", {
 
 contextBridge.exposeInMainWorld("deepLink", {
   onReceived: (callback) => ipcRenderer.on("deep-link", callback),
+});
+
+contextBridge.exposeInMainWorld("env", {
+  isDesktop: true,
+  isMac: process.platform === "darwin",
+});
+
+contextBridge.exposeInMainWorld("app", {
+  onWindowClose: (callback) => ipcRenderer.on("window-close", callback),
 });

@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, Tray, Menu, ipcMain } from "electron";
+import { app, BrowserWindow, Tray, Menu, ipcMain, session } from "electron";
 import electronUpdater from "electron-updater";
 import log from "electron-log";
 import path from "path";
@@ -69,27 +69,86 @@ function createWindow() {
     height: 800,
     icon: path.join(__dirname, "assets/icons/filled/icon.ico"),
     backgroundColor: "#000000",
+    titleBarStyle: "hidden",
+
+    ...(!isMac
+      ? {
+          titleBarOverlay: {
+            color: "#0c0c0c00",
+            symbolColor: "#ffffff",
+            height: 32,
+          },
+        }
+      : {}),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
-  mainWindow.loadURL("https://vumeto.samy0f.com");
+  mainWindow.loadURL("https://vumeto.samy0f.com/home", {
+    extraHeaders: "x-app: desktop\n",
+  });
+  // mainWindow.loadURL("http://localhost:3000/home", {
+  //   extraHeaders: "x-app: desktop\n",
+  // });
+
+  mainWindow.webContents.setUserAgent(
+    "VumetoDesktop/1.0 " + mainWindow.webContents.getUserAgent()
+  );
 
   mainWindow.on("close", (event) => {
     if (!isMac && !isQuitting) {
+      ipcMain?.send?.("window-close");
       event.preventDefault();
       mainWindow.hide();
     }
   });
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+
+  // mainWindow.webContents.openDevTools();
 }
 
 function initializeApp() {
   createWindow();
   createTray();
+
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    try {
+      const url = new URL(details.url);
+      const ref = url.searchParams.get("vumeto-ref");
+
+      if (ref) {
+        const decodedRef = decodeURIComponent(ref);
+
+        details.requestHeaders["Referer"] = decodedRef;
+        details.requestHeaders["Origin"] = decodedRef;
+      }
+    } catch (e) {
+      log.error("Failed to parse URL:", details.url, e);
+    }
+
+    callback({ requestHeaders: details.requestHeaders });
+  });
+
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    const headers = {
+      ...details.responseHeaders,
+    };
+
+    // Remove existing CORS headers (important)
+    delete headers["access-control-allow-origin"];
+    delete headers["Access-Control-Allow-Origin"];
+
+    headers["Access-Control-Allow-Origin"] = ["*"];
+    headers["Access-Control-Allow-Headers"] = ["*"];
+    headers["Access-Control-Allow-Methods"] = [
+      "GET, POST, PUT, DELETE, OPTIONS",
+    ];
+
+    callback({ responseHeaders: headers });
+  });
+
   autoUpdater.autoDownload = true;
   autoUpdater.checkForUpdates();
 
