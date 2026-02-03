@@ -95,12 +95,12 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL("https://vumeto.samy0f.com/home", {
-    extraHeaders: "x-app: desktop\n",
-  });
-  // mainWindow.loadURL("http://localhost:3000/home", {
+  // mainWindow.loadURL("https://vumeto.samy0f.com/home", {
   //   extraHeaders: "x-app: desktop\n",
   // });
+  mainWindow.loadURL("http://localhost:3000/home", {
+    extraHeaders: "x-app: desktop\n",
+  });
 
   mainWindow.webContents.setUserAgent(
     `VumetoDesktop/${app.getVersion()} ${mainWindow.webContents.getUserAgent()}`
@@ -182,10 +182,13 @@ if (!isMac) {
       const deepLink = argv.find((arg) => arg.startsWith("vumeto-desktop://"));
 
       if (deepLink) {
-        const path = deepLink.split("vumeto-desktop://")[1];
+        const path = deepLink.split("vumeto-desktop:/")[1];
 
         log.info(`Received deep link: ${deepLink}, path: ${path}`);
-        mainWindow.webContents.send("deep-link", { path, deepLink });
+        mainWindow.webContents.send("deep-link", {
+          path: path.endsWith("/") ? path.slice(0, -1) : path,
+          deepLink,
+        });
       }
     });
 
