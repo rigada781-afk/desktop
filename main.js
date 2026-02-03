@@ -95,12 +95,12 @@ function createWindow() {
     },
   });
 
-  // mainWindow.loadURL("https://vumeto.samy0f.com/home", {
-  //   extraHeaders: "x-app: desktop\n",
-  // });
-  mainWindow.loadURL("http://localhost:3000/home", {
+  mainWindow.loadURL("https://vumeto.samy0f.com/home", {
     extraHeaders: "x-app: desktop\n",
   });
+  // mainWindow.loadURL("http://localhost:3000/home", {
+  //   extraHeaders: "x-app: desktop\n",
+  // });
 
   mainWindow.webContents.setUserAgent(
     `VumetoDesktop/${app.getVersion()} ${mainWindow.webContents.getUserAgent()}`
