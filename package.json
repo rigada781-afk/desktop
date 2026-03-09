@@ -1,30 +1,42 @@
 {
-  "name": "vumeto",
-  "version": "0.1.5",
-  "type": "module",
-  "description": "The official desktop application for Vumeto - an anime streaming platform that aggregates content from various sources.",
+  "name": "vumeto-desktop",
+  "version": "0.2.1",
+  "description": "Vumeto Desktop App",
   "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder build --publish never",
+    "build:win": "electron-builder build --win --publish never",
+    "build:mac": "electron-builder build --mac --publish never",
+    "build:linux": "electron-builder build --linux --publish never",
+    "publish": "electron-builder build --publish always"
+  },
+  "keywords": [],
+  "author": "Vumeto",
+  "license": "GPL-3.0",
+  "repository": "https://github.com/vumeto/desktop",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "electron-updater": "^6.1.7",
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6",
+    "cors": "^2.8.5"
+  },
   "build": {
-    "appId": "com.vumeto.app",
+    "appId": "com.vumeto.desktop",
     "productName": "Vumeto",
-    "directories": {
-      "buildResources": "assets"
-    },
-    "win": {
-      "icon": "assets/icons/filled/icon.ico",
-      "target": "nsis"
-    },
-    "mac": {
-      "icon": "assets/icons/filled/icon.icns"
-    },
-    "linux": {
-      "icon": "assets/icons/filled"
-    },
+    "copyright": "Copyright © 2024 Vumeto",
+    "icon": "assets/icon",
+    "asar": true,
     "protocols": [
       {
-        "name": "Vumeto Desktop Protocol",
+        "name": "Vumeto",
         "schemes": [
-          "vumeto-desktop"
+          "vumeto"
         ]
       }
     ],
@@ -36,43 +48,63 @@
         "releaseType": "release"
       }
     ],
-    "extraResources": [
-      {
-        "from": "assets",
-        "to": "assets"
-      }
-    ],
-    "files": [
-      "**/*",
-      "!.gitignore",
-      "!README.md",
-      "!LICENSE",
-      "!dist/**/*",
-      "!build/**/*"
-    ]
-  },
-  "scripts": {
-    "start": "electron .",
-    "build": "electron-builder",
-    "build:p": "electron-builder  --publish=always"
-  },
-  "repository": "https://github.com/vumeto/desktop",
-  "keywords": [
-    "Vumeto",
-    "Electron",
-    "Desktop",
-    "Anime",
-    "demo"
-  ],
-  "author": "GitHub",
-  "license": "GPL-3.0",
-  "devDependencies": {
-    "electron": "^40.0.0",
-    "electron-builder": "^26.4.0"
-  },
-  "dependencies": {
-    "electron-log": "^5.4.3",
-    "electron-updater": "^6.7.3",
-    "update-electron-app": "^3.1.2"
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "assets/icons/filled/icon.ico",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "icon": "assets/icons/filled/icon.icns",
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "assets/icons/filled",
+      "category": "Multimedia"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
   }
 }

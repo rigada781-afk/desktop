@@ -1,262 +1,379 @@
-// Modules to control application life and create native browser window
-import { app, BrowserWindow, Tray, Menu, ipcMain, session } from "electron";
-import electronUpdater from "electron-updater";
-import log from "electron-log";
-import path from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+// ─── Vumeto Desktop — Main Process ───────────────────────────────────────────
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const isMac = process.platform === "darwin";
-const UPDATE_FLAG = path.join(app.getPath("userData"), "update.json");
-const autoUpdater = electronUpdater.autoUpdater;
-const isDev = !app.isPackaged;
+const {
+  app,
+  BrowserWindow,
+  session,
+  shell,
+  ipcMain,
+  Tray,
+  Menu,
+  nativeImage,
+} = require("electron");
+const path = require("path");
+const {
+  startExpressServer,
+  setMainWindow,
+  buildUserAgent,
+  buildExtraHeaders,
+} = require("./server");
+const {
+  setupAutoUpdater,
+  stopUpdateTimer,
+  installUpdate,
+} = require("./updater");
+const config = require("./config");
 
-log.initialize();
-Object.assign(console, log.functions);
-Menu.setApplicationMenu(null);
+// ── App version ───────────────────────────────────────────────────────────────
+const APP_VERSION = app.getVersion();
+const IS_DEV = process.argv.includes("--dev");
 
+// ── Single instance lock ──────────────────────────────────────────────────────
+const gotLock = app.requestSingleInstanceLock();
+if (!gotLock) {
+  app.quit();
+  process.exit(0);
+}
+
+// ── Deep link protocol registration ──────────────────────────────────────────
+// On macOS this is handled via Info.plist (electron-builder sets it up).
+// On Windows/Linux we set the default protocol client here.
+if (process.platform !== "darwin") {
+  app.setAsDefaultProtocolClient(config.DEEP_LINK_PROTOCOL);
+}
+
+// ── Startup: launch express server immediately ────────────────────────────────
+// This runs even before the window is created, so the site can detect the app.
+let expressServer = null;
+startExpressServer(APP_VERSION)
+  .then((server) => {
+    expressServer = server;
+  })
+  .catch((err) => console.error("[main] Failed to start express server:", err));
+
+// ── Window management ─────────────────────────────────────────────────────────
 let mainWindow = null;
 let tray = null;
-let isQuitting = false;
 
-if (process.defaultApp) {
-  if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient("vumeto-desktop", process.execPath, [
-      path.resolve(process.argv[1]),
-    ]);
-  }
-} else {
-  app.setAsDefaultProtocolClient("vumeto-desktop");
-}
+function createWindow(basePath = null) {
+  mainWindow = new BrowserWindow({
+    width: config.WINDOW.width,
+    height: config.WINDOW.height,
+    minWidth: config.WINDOW.minWidth,
+    minHeight: config.WINDOW.minHeight,
+    title: config.WINDOW.title,
+    icon: path.join(__dirname, "assets/icons/filled/icon.ico"),
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+    show: false, // Show after ready-to-show to avoid flicker
+    titleBarStyle: "hidden",
+    backgroundColor: "#000000",
+    ...(process.platform !== "darwin" && {
+      titleBarOverlay: {
+        color: "#0c0c0c00",
+        symbolColor: "#ffffff",
+        height: 32,
+      },
+    }),
+  });
 
-function getAssetPath(...paths) {
-  if (!isDev) {
-    return path.join(process.resourcesPath, ...paths);
-  }
-  return path.join(__dirname, ...paths);
-}
+  // Show once content is ready
+  mainWindow.once("ready-to-show", () => {
+    mainWindow.show();
+  });
 
-function showWindow() {
-  if (!mainWindow) {
-    const wins = BrowserWindow.getAllWindows();
-    if (wins.length === 0) {
-      createWindow();
-    } else {
-      wins[0].focus();
+  // ── Inject custom headers on every request ──────────────────────────────────
+  const filter = { urls: ["*://*/*"] };
+  mainWindow.webContents.session.webRequest.onBeforeSendHeaders(
+    { urls: ["*://*/*"] },
+    (details, callback) => {
+      const headers = { ...details.requestHeaders };
+
+      // Always inject desktop identification headers
+      headers[config.CUSTOM_HEADER_NAME] = config.CUSTOM_HEADER_VALUE;
+      headers["User-Agent"] = buildUserAgent(APP_VERSION);
+
+      // Check for vumeto-headers in the request URL search params
+      let redirectURL;
+      try {
+        const parsedUrl = new URL(details.url);
+        const encodedHeaders = parsedUrl.searchParams.get("vumeto-headers");
+        if (encodedHeaders) {
+          // Parse and inject each header directly (no browser restrictions here)
+          const extraHeaders = JSON.parse(decodeURIComponent(encodedHeaders));
+          for (const [key, value] of Object.entries(extraHeaders)) {
+            headers[key] = value;
+          }
+          // Strip the param so it never reaches the actual server
+          parsedUrl.searchParams.delete("vumeto-headers");
+          redirectURL = parsedUrl.toString();
+        }
+      } catch (e) {
+        console.warn(
+          "[headers] Failed to parse vumeto-headers param:",
+          e.message
+        );
+      }
+
+      callback({
+        requestHeaders: headers,
+        ...(redirectURL ? { redirectURL } : {}),
+      });
     }
-  } else {
+  );
+  // ── CORS bypass: remove restrictive response headers ────────────────────────
+  mainWindow.webContents.session.webRequest.onHeadersReceived(
+    filter,
+    (details, callback) => {
+      const headers = { ...details.responseHeaders };
+      // Override CORS headers to allow everything
+      headers["access-control-allow-origin"] = ["*"];
+      headers["access-control-allow-headers"] = ["*"];
+      headers["access-control-allow-methods"] = [
+        "GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD",
+      ];
+      headers["access-control-allow-credentials"] = ["true"];
+      callback({ responseHeaders: headers });
+    }
+  );
+
+  const url = basePath ? `${config.APP_URL}${basePath}` : config.APP_URL;
+  console.log("[main] Loading URL:", url);
+
+  // ── Load the app URL ─────────────────────────────────────────────────────────
+  mainWindow.loadURL(url, {
+    extraHeaders: buildExtraHeaders(APP_VERSION),
+  });
+
+  // ── Open external links in default browser ───────────────────────────────────
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (!url.startsWith(config.APP_URL)) {
+      shell.openExternal(url);
+      return { action: "deny" };
+    }
+    return { action: "allow" };
+  });
+
+  // ── Tray icon ─────────────────────────────────────────────────────────────────
+  setupTray();
+
+  // ── Register with express server ─────────────────────────────────────────────
+  setMainWindow(mainWindow, goToPath);
+
+  // ── Auto-updater ──────────────────────────────────────────────────────────────
+  setupAutoUpdater(mainWindow);
+
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
+
+  // On close: minimize to tray instead of quitting
+  // mainWindow.on("close", (e) => {
+  //   if (!app.isQuitting) {
+  //     e.preventDefault();
+  //     mainWindow.hide();
+  //   }
+  // });
+
+  if (IS_DEV) mainWindow.webContents.openDevTools();
+
+  return mainWindow;
+}
+
+const goToPath = (path) => {
+  if (path.startsWith(config.APP_URL)) {
+    path = path.replace(config.APP_URL, "");
+  }
+  if (!path.startsWith("/")) {
+    path = `/${path}`;
+  }
+
+  try {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore();
+      mainWindow.show();
+      mainWindow.focus();
+
+      // Optionally navigate to a specific path
+      if (path) {
+        const targetUrl = `${config.APP_URL}${path}`;
+        mainWindow.loadURL(targetUrl, {
+          extraHeaders: buildExtraHeaders(APP_VERSION),
+        });
+      }
+      return true;
+    }
+  } catch (error) {}
+  createWindow(path);
+  return true;
+};
+
+function setupTray() {
+  try {
+    if (tray) return;
+
+    const iconPath = path.join(
+      __dirname,
+      "assets",
+      "icons",
+      "transparant",
+      "16.png"
+    );
+    const icon = nativeImage.createFromPath(iconPath);
+    tray = new Tray(icon.isEmpty() ? nativeImage.createEmpty() : icon);
+    tray.setToolTip("Vumeto");
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: "Open Vumeto",
+        click: () => {
+          if (mainWindow) {
+            mainWindow.show();
+            mainWindow.focus();
+          } else {
+            createWindow();
+          }
+        },
+      },
+      { type: "separator" },
+      {
+        label: `Version ${APP_VERSION}`,
+        enabled: false,
+      },
+      { type: "separator" },
+      {
+        label: "Quit",
+        click: () => {
+          app.isQuitting = true;
+          app.quit();
+        },
+      },
+    ]);
+    tray.setContextMenu(contextMenu);
+    tray.on("click", () => {
+      if (mainWindow) {
+        mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+      } else {
+        createWindow();
+      }
+    });
+  } catch (e) {
+    console.warn("[tray] Could not create tray icon:", e.message);
+  }
+}
+
+// ── Deep link handler ─────────────────────────────────────────────────────────
+function handleDeepLink(url) {
+  if (!url) return;
+
+  // Parse: vumeto://action?param=value
+  try {
+    const parsed = new URL(url);
+    const action = parsed.hostname; // e.g. "open", "auth", "page"
+    const params = Object.fromEntries(parsed.searchParams.entries());
+
+    const path = action === "open" ? params.path : null;
+
+    goToPath(path);
+  } catch (e) {
+    console.error("[deeplink] Failed to parse URL:", e.message);
+  }
+}
+
+// ── Second instance (Windows/Linux deep link) ─────────────────────────────────
+app.on("second-instance", (_event, commandLine) => {
+  // The deep link URL is the last argument on Windows/Linux
+  const url = commandLine.find((arg) =>
+    arg.startsWith(`${config.DEEP_LINK_PROTOCOL}://`)
+  );
+  if (url) handleDeepLink(url);
+
+  if (mainWindow) {
     if (mainWindow.isMinimized()) mainWindow.restore();
     mainWindow.show();
     mainWindow.focus();
   }
-}
+});
 
-function createTray() {
-  const iconPath = getAssetPath("assets", "icons", "transparant", "16.png");
+// ── macOS deep link ───────────────────────────────────────────────────────────
+app.on("open-url", (event, url) => {
+  event.preventDefault();
+  handleDeepLink(url);
+});
 
-  tray = new Tray(iconPath);
-  tray.setToolTip(`Vumeto v${app.getVersion()}`);
+// ── App lifecycle ─────────────────────────────────────────────────────────────
+app.whenReady().then(() => {
+  // Only show window if NOT launched at startup (startup = hidden/background mode)
+  const isStartup =
+    process.argv.includes("--startup") ||
+    (app.getLoginItemSettings && app.getLoginItemSettings().wasOpenedAtLogin);
 
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "Open App",
-      click: () => showWindow(),
-    },
-    { role: "quit" },
-  ]);
-  tray.setContextMenu(contextMenu);
-
-  tray.on("click", () => {
-    showWindow();
-  });
-}
-
-function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
-    icon: path.join(__dirname, "assets/icons/filled/icon.ico"),
-    backgroundColor: "#000000",
-    titleBarStyle: "hidden",
-
-    ...(!isMac
-      ? {
-          titleBarOverlay: {
-            color: "#0c0c0c00",
-            symbolColor: "#ffffff",
-            height: 32,
-          },
-        }
-      : {}),
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
-
-  mainWindow.loadURL("https://vumeto.samy0f.com/home", {
-    extraHeaders: "x-app: desktop\n",
-  });
-  // mainWindow.loadURL("http://localhost:3000/home", {
-  //   extraHeaders: "x-app: desktop\n",
-  // });
-
-  mainWindow.webContents.setUserAgent(
-    `VumetoDesktop/${app.getVersion()} ${mainWindow.webContents.getUserAgent()}`
-  );
-
-  mainWindow.on("close", (event) => {
-    if (!isMac && !isQuitting) {
-      ipcMain?.send?.("window-close");
-      event.preventDefault();
-      mainWindow.hide();
-    }
-  });
-
-  // Open the DevTools.
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
-}
-
-function initializeApp() {
-  createWindow();
-  createTray();
-
-  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
-    try {
-      const url = new URL(details.url);
-      const ref = url.searchParams.get("vumeto-ref");
-
-      if (ref) {
-        const decodedRef = decodeURIComponent(ref);
-
-        details.requestHeaders["Referer"] = decodedRef;
-        details.requestHeaders["Origin"] = decodedRef;
-      }
-    } catch (e) {
-      log.error("Failed to parse URL:", details.url, e);
-    }
-
-    callback({ requestHeaders: details.requestHeaders });
-  });
-
-  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-    const headers = {
-      ...details.responseHeaders,
-    };
-
-    // Remove existing CORS headers (important)
-    delete headers["access-control-allow-origin"];
-    delete headers["Access-Control-Allow-Origin"];
-
-    headers["Access-Control-Allow-Origin"] = ["*"];
-    headers["Access-Control-Allow-Headers"] = ["*"];
-    headers["Access-Control-Allow-Methods"] = [
-      "GET, POST, PUT, DELETE, OPTIONS",
-    ];
-
-    callback({ responseHeaders: headers });
-  });
-
-  autoUpdater.autoDownload = true;
-  autoUpdater.checkForUpdates();
-
-  if (fs.existsSync(UPDATE_FLAG)) {
-    fs.unlinkSync(UPDATE_FLAG);
-    autoUpdater.quitAndInstall();
-  }
-}
-
-const gotTheLock = app.requestSingleInstanceLock();
-
-if (!isMac) {
-  if (!gotTheLock) {
-    app.quit();
+  if (!isStartup) {
+    createWindow();
   } else {
-    app.on("second-instance", (event, argv, workingDirectory) => {
-      // Someone tried to run a second instance, we should focus our window.
-      showWindow();
+    console.log(
+      "[main] Launched at startup — running in background (express only)"
+    );
+    // Tray-only mode at startup
+    try {
+      setupTray();
+    } catch (e) {
+      console.warn("[main] Tray setup failed at startup:", e.message);
+    }
+  }
 
-      const deepLink = argv.find((arg) => arg.startsWith("vumeto-desktop://"));
-
-      if (deepLink) {
-        const path = deepLink.split("vumeto-desktop:/")[1];
-
-        log.info(`Received deep link: ${deepLink}, path: ${path}`);
-        mainWindow.webContents.send("deep-link", {
-          path: path.endsWith("/") ? path.slice(0, -1) : path,
-          deepLink,
-        });
-      }
-    });
-
-    app.whenReady().then(() => {
-      initializeApp();
+  // ── Set app to run at system startup ────────────────────────────────────────
+  if (!IS_DEV) {
+    app.setLoginItemSettings({
+      openAtLogin: true,
+      openAsHidden: true, // Start minimized/hidden (background only)
+      args: ["--startup"],
     });
   }
-} else {
-  app.whenReady().then(() => {
-    initializeApp();
+
+  app.on("activate", () => {
+    // macOS: re-open window when dock icon is clicked
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    } else if (mainWindow) {
+      mainWindow.show();
+    }
   });
-}
+});
 
 app.on("window-all-closed", () => {
-  // Do not call app.quit() here
-  console.log("All windows closed, but app is still running.");
-  console.log(BrowserWindow.getAllWindows().length);
+  // On macOS keep app running (tray + server), on other platforms too
+  // App only truly quits from tray menu
 });
 
 app.on("before-quit", () => {
-  isQuitting = true;
-});
-
-app.on("activate", function () {
-  if (BrowserWindow.getAllWindows().length === 0) createWindow();
-});
-
-/* Update Check */
-
-autoUpdater.on("checking-for-update", () => {
-  log.info("Checking for update...");
-});
-
-autoUpdater.on("update-available", () => {
-  log.info("Update available");
-});
-
-autoUpdater.on("update-not-available", () => {
-  log.info("Update not available");
-});
-
-autoUpdater.on("error", (error) => {
-  log.error("Error checking for update", error);
-});
-
-autoUpdater.on("download-progress", (progress) => {
-  log.info(
-    `Download progress: ${progress.percent}% (${progress.bytesPerSecond} bytes/s)`
-  );
-  ipcMain.send("update-download-progress", progress);
-});
-
-autoUpdater.on("update-downloaded", () => {
-  log.info("Update downloaded");
-  update.state = "update-downloaded";
-  fs.writeFileSync(UPDATE_FLAG, "ready");
-
-  if (mainWindow) {
-    mainWindow.webContents.send("update-ready");
+  app.isQuitting = true;
+  stopUpdateTimer();
+  if (expressServer) {
+    expressServer.close(() => console.log("[express] Server closed"));
   }
 });
 
-ipcMain.handle("install-update", () => {
-  isQuitting = true;
-  fs.unlinkSync(UPDATE_FLAG);
-  autoUpdater.quitAndInstall();
+// ── IPC handlers ──────────────────────────────────────────────────────────────
+ipcMain.handle("get-app-version", () => APP_VERSION);
+ipcMain.handle("get-platform", () => process.platform);
+ipcMain.handle("open-external", (_event, url) => shell.openExternal(url));
+ipcMain.handle("open-devtools", () => mainWindow?.webContents?.openDevTools());
+ipcMain.handle("install-update", () => installUpdate());
+ipcMain.handle("show-window", () => {
+  if (mainWindow) {
+    mainWindow.show();
+    mainWindow.focus();
+  }
 });
-
-ipcMain.handle("get-app-version", () => {
-  return app.getVersion();
-});
+ipcMain.handle("minimize", () => mainWindow?.minimize());
+ipcMain.handle("maximize", () => mainWindow?.maximize());
+ipcMain.handle("unmaximize", () => mainWindow?.unmaximize());
+ipcMain.handle("close", () => mainWindow?.close());
+ipcMain.handle("reload", () => mainWindow?.webContents?.reload());
+ipcMain.handle("force-reload", () =>
+  mainWindow?.webContents?.reloadIgnoringCache()
+);
