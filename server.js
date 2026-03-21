@@ -3,6 +3,7 @@ const cors = require("cors");
 const { request: httpsRequest } = require("https");
 const { request: httpRequest } = require("http");
 const config = require("./config");
+const { updateDiscordRPC } = require("./rpc");
 
 let mainWindowRef = null; // Set by main process after window is created
 let goToPathRef = null; // Set by main process after window is created
@@ -25,7 +26,7 @@ function createExpressServer(appVersion) {
       credentials: true,
       preflightContinue: false,
       optionsSuccessStatus: 204,
-    })
+    }),
   );
 
   // Allow all preflight requests globally
@@ -49,6 +50,13 @@ function createExpressServer(appVersion) {
   app.get("/open", (req, res) => {
     goToPathRef(req.query.path);
     res.json({ success: true });
+  });
+
+  // ── /update-discord-rpc ── update the discord RPC ───────────────────────────
+  app.post("/update-discord-rpc", async (req, res) => {
+    const { name, episode, id } = req.body;
+    const result = await updateDiscordRPC({ name, episode, id });
+    res.json(result);
   });
 
   // ── /proxy ── simple pipe proxy: ?url=...&headers=...&method=... ─────────
@@ -81,7 +89,7 @@ function createExpressServer(appVersion) {
       (upstream) => {
         res.status(upstream.statusCode || 500).set(upstream.headers);
         upstream.pipe(res);
-      }
+      },
     );
 
     proxy.on("error", (err) => {
@@ -103,8 +111,8 @@ function buildUserAgent(version) {
     process.platform === "win32"
       ? "Windows"
       : process.platform === "darwin"
-      ? "Macintosh"
-      : "Linux";
+        ? "Macintosh"
+        : "Linux";
   return `VumetoDesktop/${version} (${platform}) Electron`;
 }
 
@@ -117,17 +125,22 @@ function buildExtraHeaders(version) {
 
 function startExpressServer(appVersion) {
   return new Promise((resolve, reject) => {
+    if (!config.server) {
+      console.log("[express] Server is disabled in config — skipping startup");
+      return resolve(null);
+    }
+
     const app = createExpressServer(appVersion);
     const server = app.listen(config.EXPRESS_PORT, "127.0.0.1", () => {
       console.log(
-        `[express] Vumeto background server running on http://127.0.0.1:${config.EXPRESS_PORT}`
+        `[express] Vumeto background server running on http://127.0.0.1:${config.EXPRESS_PORT}`,
       );
       resolve(server);
     });
     server.on("error", (err) => {
       if (err.code === "EADDRINUSE") {
         console.warn(
-          `[express] Port ${config.EXPRESS_PORT} already in use — skipping server start`
+          `[express] Port ${config.EXPRESS_PORT} already in use — skipping server start`,
         );
         resolve(null); // Already running — that's fine
       } else {

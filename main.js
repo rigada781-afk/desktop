@@ -3,13 +3,13 @@
 const {
   app,
   BrowserWindow,
-  session,
   shell,
   ipcMain,
   Tray,
   Menu,
   nativeImage,
 } = require("electron");
+const Store = require("electron-store");
 const path = require("path");
 const {
   startExpressServer,
@@ -22,6 +22,16 @@ const {
   stopUpdateTimer,
   installUpdate,
 } = require("./updater");
+const { startDiscordRPC, updateDiscordRPC } = require("./rpc");
+const {
+  initDownload,
+  downloadM3U8ToMP4,
+  getDownloads,
+  pauseDownload,
+  resumeDownload,
+  cancelDownload,
+  deleteDownload,
+} = require("./download");
 const config = require("./config");
 
 // ── App version ───────────────────────────────────────────────────────────────
@@ -35,11 +45,39 @@ if (!gotLock) {
   process.exit(0);
 }
 
+// ── Store ───────────────────────────────────────────────────────────────
+
+const store = new Store();
+
 // ── Deep link protocol registration ──────────────────────────────────────────
 // On macOS this is handled via Info.plist (electron-builder sets it up).
-// On Windows/Linux we set the default protocol client here.
+// On Windows/Linux we explicitly register the protocol handler.
+//
+// NOTE: In development (electron .) Windows will sometimes launch Electron
+// with the deep link URL as the "app path" which makes Electron try to load
+// the URL as if it were a JS file. To avoid that, we register the protocol
+// client with the same args used for normal startup (app path).
+let initialDeepLink = null;
+
+function parseDeepLinkFromArgs(argv) {
+  return argv?.find((arg) => arg.startsWith(`${config.DEEP_LINK_PROTOCOL}://`));
+}
+
 if (process.platform !== "darwin") {
-  app.setAsDefaultProtocolClient(config.DEEP_LINK_PROTOCOL);
+  initialDeepLink = parseDeepLinkFromArgs(process.argv);
+
+  const protocolArgs = [];
+  if (process.defaultApp && process.argv.length >= 2) {
+    // In dev mode (electron .) we need to pass the app path so Windows can
+    // launch us correctly when the protocol is invoked.
+    protocolArgs.push(process.argv[1]);
+  }
+
+  app.setAsDefaultProtocolClient(
+    config.DEEP_LINK_PROTOCOL,
+    process.execPath,
+    protocolArgs,
+  );
 }
 
 // ── Startup: launch express server immediately ────────────────────────────────
@@ -115,7 +153,7 @@ function createWindow(basePath = null) {
       } catch (e) {
         console.warn(
           "[headers] Failed to parse vumeto-headers param:",
-          e.message
+          e.message,
         );
       }
 
@@ -123,7 +161,7 @@ function createWindow(basePath = null) {
         requestHeaders: headers,
         ...(redirectURL ? { redirectURL } : {}),
       });
-    }
+    },
   );
   // ── CORS bypass: remove restrictive response headers ────────────────────────
   mainWindow.webContents.session.webRequest.onHeadersReceived(
@@ -138,7 +176,7 @@ function createWindow(basePath = null) {
       ];
       headers["access-control-allow-credentials"] = ["true"];
       callback({ responseHeaders: headers });
-    }
+    },
   );
 
   const url = basePath ? `${config.APP_URL}${basePath}` : config.APP_URL;
@@ -221,7 +259,7 @@ function setupTray() {
       "assets",
       "icons",
       "transparant",
-      "16.png"
+      "16.png",
     );
     const icon = nativeImage.createFromPath(iconPath);
     tray = new Tray(icon.isEmpty() ? nativeImage.createEmpty() : icon);
@@ -287,7 +325,7 @@ function handleDeepLink(url) {
 app.on("second-instance", (_event, commandLine) => {
   // The deep link URL is the last argument on Windows/Linux
   const url = commandLine.find((arg) =>
-    arg.startsWith(`${config.DEEP_LINK_PROTOCOL}://`)
+    arg.startsWith(`${config.DEEP_LINK_PROTOCOL}://`),
   );
   if (url) handleDeepLink(url);
 
@@ -306,6 +344,7 @@ app.on("open-url", (event, url) => {
 
 // ── App lifecycle ─────────────────────────────────────────────────────────────
 app.whenReady().then(() => {
+  startDiscordRPC();
   // Only show window if NOT launched at startup (startup = hidden/background mode)
   const isStartup =
     process.argv.includes("--startup") ||
@@ -315,7 +354,7 @@ app.whenReady().then(() => {
     createWindow();
   } else {
     console.log(
-      "[main] Launched at startup — running in background (express only)"
+      "[main] Launched at startup — running in background (express only)",
     );
     // Tray-only mode at startup
     try {
@@ -323,6 +362,13 @@ app.whenReady().then(() => {
     } catch (e) {
       console.warn("[main] Tray setup failed at startup:", e.message);
     }
+  }
+  initDownload(mainWindow, store);
+
+  // If the app was launched via deep link (Windows/Linux), handle it now.
+  if (initialDeepLink) {
+    handleDeepLink(initialDeepLink);
+    initialDeepLink = null;
   }
 
   // ── Set app to run at system startup ────────────────────────────────────────
@@ -360,7 +406,7 @@ app.on("before-quit", () => {
 // ── IPC handlers ──────────────────────────────────────────────────────────────
 ipcMain.handle("get-app-version", () => APP_VERSION);
 ipcMain.handle("get-platform", () => process.platform);
-ipcMain.handle("open-external", (_event, url) => shell.openExternal(url));
+ipcMain.handle("open-external", (_, url) => shell.openExternal(url));
 ipcMain.handle("open-devtools", () => mainWindow?.webContents?.openDevTools());
 ipcMain.handle("install-update", () => installUpdate());
 ipcMain.handle("show-window", () => {
@@ -375,5 +421,17 @@ ipcMain.handle("unmaximize", () => mainWindow?.unmaximize());
 ipcMain.handle("close", () => mainWindow?.close());
 ipcMain.handle("reload", () => mainWindow?.webContents?.reload());
 ipcMain.handle("force-reload", () =>
-  mainWindow?.webContents?.reloadIgnoringCache()
+  mainWindow?.webContents?.reloadIgnoringCache(),
 );
+ipcMain.handle("update-discord-rpc", (_, { name, episode, id }) =>
+  updateDiscordRPC({ name, episode, id }),
+);
+
+ipcMain.handle("download:start", (_, masterUrl, metadata) =>
+  downloadM3U8ToMP4(masterUrl, metadata),
+);
+ipcMain.handle("download:history", () => getDownloads());
+ipcMain.handle("download:pause", (_, id) => pauseDownload(id));
+ipcMain.handle("download:resume", (_, id) => resumeDownload(id));
+ipcMain.handle("download:cancel", (_, id) => cancelDownload(id));
+ipcMain.handle("download:delete", (_, id) => deleteDownload(id));

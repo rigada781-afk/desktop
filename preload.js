@@ -19,22 +19,45 @@ contextBridge.exposeInMainWorld("vumetoDesktop", {
   openDevtools: () => ipcRenderer.invoke("open-devtools"),
 
   // ── Update events ─────────────────────────────────────────────────────────────
-  onUpdateAvailable: (callback) => {
-    ipcRenderer.on("update-available", (_event, info) => callback(info));
+  onUpdateAvailable: (cb) => {
+    ipcRenderer.on("update-available", (_, info) => cb(info));
   },
-  onUpdateDownloadProgress: (callback) => {
-    ipcRenderer.on("update-download-progress", (_event, progress) =>
-      callback(progress)
-    );
+  onUpdateDownloadProgress: (cb) => {
+    ipcRenderer.on("update-download-progress", (_, data) => cb(data));
   },
-  onUpdateDownloaded: (callback) => {
-    ipcRenderer.on("update-downloaded", (_event, info) => callback(info));
+  onUpdateDownloaded: (cb) => {
+    ipcRenderer.on("update-downloaded", (_, info) => cb(info));
   },
   installUpdate: () => ipcRenderer.invoke("install-update"),
 
   // ── Deep link events ──────────────────────────────────────────────────────────
-  onDeepLink: (callback) => {
-    ipcRenderer.on("deep-link", (_event, data) => callback(data));
+  onDeepLink: (cb) => {
+    ipcRenderer.on("deep-link", (_, data) => cb(data));
+  },
+
+  // ── Discord RPC ───────────────────────────────────────────────────────────────
+  updateDiscordRPC: (data) => ipcRenderer.invoke("update-discord-rpc", data),
+
+  // ── Download ───────────────────────────────────────────────────────────────
+
+  download: {
+    // Actions
+    start: (masterUrl, metadata) =>
+      ipcRenderer.invoke("download:start", masterUrl, metadata),
+    history: () => ipcRenderer.invoke("download:history"),
+    pause: (id) => ipcRenderer.invoke("download:pause", id),
+    resume: (id) => ipcRenderer.invoke("download:resume", id),
+    cancel: (id) => ipcRenderer.invoke("download:cancel", id),
+    delete: (id, opts) => ipcRenderer.invoke("download:delete", id, opts),
+
+    // Events
+    onUpdate: (cb) => ipcRenderer.on("download:update", (_, data) => cb(data)),
+    onDeleted: (cb) =>
+      ipcRenderer.on("download:deleted", (_, data) => cb(data)),
+
+    // Cleanup (call these when your component unmounts)
+    offUpdate: (cb) => ipcRenderer.removeListener("download:update", cb),
+    offDeleted: (cb) => ipcRenderer.removeListener("download:deleted", cb),
   },
 
   minimize: () => ipcRenderer.invoke("minimize"),

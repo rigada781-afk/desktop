@@ -4,6 +4,7 @@
 module.exports = {
   // The URL the Electron window will load
   APP_URL: "https://beta.vumeto.com",
+  // APP_URL: "http://localhost:3000",
 
   // App version (synced from package.json automatically)
   // This is used in the User-Agent header
@@ -32,6 +33,9 @@ module.exports = {
   // Check for updates every X milliseconds (default: 4 hours)
   UPDATE_CHECK_INTERVAL: 4 * 60 * 60 * 1000,
 
+  // Discord RPC
+  DISCORD_APP_ID: "1484498339818111016",
+
   // Window settings
   WINDOW: {
     width: 1280,
@@ -40,4 +44,6 @@ module.exports = {
     minHeight: 600,
     title: "Vumeto",
   },
+
+  server: true,
 };

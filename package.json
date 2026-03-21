@@ -1,12 +1,13 @@
 {
   "name": "vumeto-desktop",
-  "version": "0.2.1",
+  "version": "0.2.5",
   "description": "Vumeto Desktop App",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
     "build": "electron-builder build --publish never",
+    "prebuild:win": "electron-rebuild",
     "build:win": "electron-builder build --win --publish never",
     "build:mac": "electron-builder build --mac --publish never",
     "build:linux": "electron-builder build --linux --publish never",
@@ -21,15 +22,20 @@
     "electron-builder": "^24.9.1"
   },
   "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2",
+    "cors": "^2.8.5",
+    "discord-rpc": "^4.0.1",
+    "electron-store": "^11.0.2",
     "electron-updater": "^6.1.7",
     "express": "^4.18.2",
-    "http-proxy-middleware": "^2.0.6",
-    "cors": "^2.8.5"
+    "http-proxy-middleware": "^2.0.6"
   },
   "build": {
+    "npmRebuild": false,
     "appId": "com.vumeto.desktop",
     "productName": "Vumeto",
-    "copyright": "Copyright © 2024 Vumeto",
+    "copyright": "Copyright © 2026 Vumeto",
     "icon": "assets/icon",
     "asar": true,
     "protocols": [
