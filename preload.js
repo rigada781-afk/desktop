@@ -37,6 +37,7 @@ contextBridge.exposeInMainWorld("vumetoDesktop", {
 
   // ── Discord RPC ───────────────────────────────────────────────────────────────
   updateDiscordRPC: (data) => ipcRenderer.invoke("update-discord-rpc", data),
+  clearDiscordRPC: () => ipcRenderer.invoke("clear-discord-rpc"),
 
   // ── Download ───────────────────────────────────────────────────────────────
 

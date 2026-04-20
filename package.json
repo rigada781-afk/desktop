@@ -1,6 +1,6 @@
 {
   "name": "vumeto-desktop",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "Vumeto Desktop App",
   "main": "main.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "license": "GPL-3.0",
   "repository": "https://github.com/vumeto/desktop",
   "devDependencies": {
-    "electron": "^28.0.0",
+    "electron": "^41.2.1",
     "electron-builder": "^24.9.1"
   },
   "dependencies": {
@@ -26,7 +26,7 @@
     "@ffmpeg/util": "^0.12.2",
     "cors": "^2.8.5",
     "discord-rpc": "^4.0.1",
-    "electron-store": "^11.0.2",
+    "electron-store": "^8.2.0",
     "electron-updater": "^6.1.7",
     "express": "^4.18.2",
     "http-proxy-middleware": "^2.0.6"

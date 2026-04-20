@@ -3,8 +3,17 @@ const https = require("https");
 const http = require("http");
 const fs = require("fs");
 const os = require("os");
-const { FFmpeg } = require("@ffmpeg/ffmpeg");
-const { fetchFile } = require("@ffmpeg/util");
+let _FFmpeg = null;
+let _fetchFile = null;
+async function loadFFmpegModules() {
+  if (!_FFmpeg) {
+    const ffmpegMod = await import("@ffmpeg/ffmpeg");
+    const utilMod = await import("@ffmpeg/util");
+    _FFmpeg = ffmpegMod.FFmpeg;
+    _fetchFile = utilMod.fetchFile;
+  }
+  return { FFmpeg: _FFmpeg, fetchFile: _fetchFile };
+}
 
 let mainWindow = null;
 let store = null;
@@ -301,6 +310,7 @@ async function downloadM3U8ToMP4(masterUrl, metadata = {}) {
   };
 
   try {
+    const { FFmpeg, fetchFile } = await loadFFmpegModules();
     update(2, "Fetching playlist…", {
       status: "downloading",
       startedAt: Date.now(),

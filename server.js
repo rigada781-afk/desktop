@@ -3,7 +3,7 @@ const cors = require("cors");
 const { request: httpsRequest } = require("https");
 const { request: httpRequest } = require("http");
 const config = require("./config");
-const { updateDiscordRPC } = require("./rpc");
+const { updateDiscordRPC, clearDiscordRPC } = require("./rpc");
 
 let mainWindowRef = null; // Set by main process after window is created
 let goToPathRef = null; // Set by main process after window is created
@@ -57,6 +57,11 @@ function createExpressServer(appVersion) {
     const { name, episode, id } = req.body;
     const result = await updateDiscordRPC({ name, episode, id });
     res.json(result);
+  });
+
+  app.post("/clear-discord-rpc", async (req, res) => {
+    await clearDiscordRPC();
+    res.json({ success: true });
   });
 
   // ── /proxy ── simple pipe proxy: ?url=...&headers=...&method=... ─────────

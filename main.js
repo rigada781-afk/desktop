@@ -22,7 +22,7 @@ const {
   stopUpdateTimer,
   installUpdate,
 } = require("./updater");
-const { startDiscordRPC, updateDiscordRPC } = require("./rpc");
+const { startDiscordRPC, updateDiscordRPC, clearDiscordRPC } = require("./rpc");
 const {
   initDownload,
   downloadM3U8ToMP4,
@@ -382,10 +382,11 @@ app.whenReady().then(() => {
 
   app.on("activate", () => {
     // macOS: re-open window when dock icon is clicked
-    if (BrowserWindow.getAllWindows().length === 0) {
+    if (BrowserWindow.getAllWindows().length === 0 || !mainWindow) {
       createWindow();
     } else if (mainWindow) {
       mainWindow.show();
+      mainWindow.focus();
     }
   });
 });
@@ -426,6 +427,7 @@ ipcMain.handle("force-reload", () =>
 ipcMain.handle("update-discord-rpc", (_, { name, episode, id }) =>
   updateDiscordRPC({ name, episode, id }),
 );
+ipcMain.handle("clear-discord-rpc", () => clearDiscordRPC());
 
 ipcMain.handle("download:start", (_, masterUrl, metadata) =>
   downloadM3U8ToMP4(masterUrl, metadata),

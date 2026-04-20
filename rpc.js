@@ -21,7 +21,7 @@ const updateDiscordRPC = async ({ name, episode, id }) => {
   const result = await rpc.setActivity({
     details: activityDetails,
     state: activityState,
-    startTimestamp: new Date(),
+    // startTimestamp: new Date(),
     largeImageKey: "vumeto",
     largeImageText: "Streaming on Vumeto",
     instance: false,
@@ -42,7 +42,12 @@ const updateDiscordRPC = async ({ name, episode, id }) => {
   };
 };
 
+const clearDiscordRPC = async () => {
+  await rpc.clearActivity();
+};
+
 module.exports = {
   startDiscordRPC,
   updateDiscordRPC,
+  clearDiscordRPC,
 };
