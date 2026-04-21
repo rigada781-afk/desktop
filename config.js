@@ -3,8 +3,9 @@
 
 module.exports = {
   // The URL the Electron window will load
-  APP_URL: "https://beta.vumeto.com",
-  // APP_URL: "http://localhost:3000",
+  APP_URL: process.argv.includes("--loc")
+    ? "http://localhost:3000"
+    : "https://beta.vumeto.com",
 
   // App version (synced from package.json automatically)
   // This is used in the User-Agent header

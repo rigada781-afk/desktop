@@ -1,6 +1,4 @@
 // ─── Vumeto Preload Script ────────────────────────────────────────────────────
-// Exposes a safe, limited API to the renderer/website via contextBridge.
-// The website can use window.vumetoDesktop.* to interact with the desktop app.
 
 const { contextBridge, ipcRenderer } = require("electron");
 
@@ -67,6 +65,12 @@ contextBridge.exposeInMainWorld("vumetoDesktop", {
   close: () => ipcRenderer.invoke("close"),
   reload: () => ipcRenderer.invoke("reload"),
   forceReload: () => ipcRenderer.invoke("force-reload"),
+});
+
+// Expose API for loading screen
+contextBridge.exposeInMainWorld("electronAPI", {
+  onAppReady: (callback) => ipcRenderer.on("app-ready", callback),
+  sendLoaderDone: () => ipcRenderer.send("loader-done"),
 });
 
 /*

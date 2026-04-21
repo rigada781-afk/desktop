@@ -8,6 +8,7 @@ const {
   Tray,
   Menu,
   nativeImage,
+  globalShortcut,
 } = require("electron");
 const Store = require("electron-store");
 const path = require("path");
@@ -50,13 +51,6 @@ if (!gotLock) {
 const store = new Store();
 
 // ── Deep link protocol registration ──────────────────────────────────────────
-// On macOS this is handled via Info.plist (electron-builder sets it up).
-// On Windows/Linux we explicitly register the protocol handler.
-//
-// NOTE: In development (electron .) Windows will sometimes launch Electron
-// with the deep link URL as the "app path" which makes Electron try to load
-// the URL as if it were a JS file. To avoid that, we register the protocol
-// client with the same args used for normal startup (app path).
 let initialDeepLink = null;
 
 function parseDeepLinkFromArgs(argv) {
@@ -68,8 +62,6 @@ if (process.platform !== "darwin") {
 
   const protocolArgs = [];
   if (process.defaultApp && process.argv.length >= 2) {
-    // In dev mode (electron .) we need to pass the app path so Windows can
-    // launch us correctly when the protocol is invoked.
     protocolArgs.push(process.argv[1]);
   }
 
@@ -81,7 +73,6 @@ if (process.platform !== "darwin") {
 }
 
 // ── Startup: launch express server immediately ────────────────────────────────
-// This runs even before the window is created, so the site can detect the app.
 let expressServer = null;
 startExpressServer(APP_VERSION)
   .then((server) => {
@@ -107,19 +98,15 @@ function createWindow(basePath = null) {
       sandbox: true,
       preload: path.join(__dirname, "preload.js"),
     },
-    show: false, // Show after ready-to-show to avoid flicker
+    show: false,
+    frame: false,
     titleBarStyle: "hidden",
+    titleBarOverlay: false,
+    autoHideMenuBar: true,
+    simpleFullscreen: true,
     backgroundColor: "#000000",
-    ...(process.platform !== "darwin" && {
-      titleBarOverlay: {
-        color: "#0c0c0c00",
-        symbolColor: "#ffffff",
-        height: 32,
-      },
-    }),
   });
 
-  // Show once content is ready
   mainWindow.once("ready-to-show", () => {
     mainWindow.show();
   });
@@ -130,23 +117,19 @@ function createWindow(basePath = null) {
     { urls: ["*://*/*"] },
     (details, callback) => {
       const headers = { ...details.requestHeaders };
-
       // Always inject desktop identification headers
       headers[config.CUSTOM_HEADER_NAME] = config.CUSTOM_HEADER_VALUE;
       headers["User-Agent"] = buildUserAgent(APP_VERSION);
 
-      // Check for vumeto-headers in the request URL search params
       let redirectURL;
       try {
         const parsedUrl = new URL(details.url);
         const encodedHeaders = parsedUrl.searchParams.get("vumeto-headers");
         if (encodedHeaders) {
-          // Parse and inject each header directly (no browser restrictions here)
           const extraHeaders = JSON.parse(decodeURIComponent(encodedHeaders));
           for (const [key, value] of Object.entries(extraHeaders)) {
             headers[key] = value;
           }
-          // Strip the param so it never reaches the actual server
           parsedUrl.searchParams.delete("vumeto-headers");
           redirectURL = parsedUrl.toString();
         }
@@ -182,9 +165,20 @@ function createWindow(basePath = null) {
   const url = basePath ? `${config.APP_URL}${basePath}` : config.APP_URL;
   console.log("[main] Loading URL:", url);
 
-  // ── Load the app URL ─────────────────────────────────────────────────────────
-  mainWindow.loadURL(url, {
-    extraHeaders: buildExtraHeaders(APP_VERSION),
+  mainWindow.loadFile(path.join(__dirname, "loading.html"));
+
+  const targetUrl = basePath ? `${config.APP_URL}${basePath}` : config.APP_URL;
+
+  waitForURL(targetUrl).then(() => {
+    console.log("[main] Sending app-ready to loader");
+    mainWindow?.webContents.send("app-ready");
+  });
+
+  ipcMain.once("loader-done", () => {
+    console.log("[main] Loader done, loading URL:", targetUrl);
+    mainWindow?.loadURL(targetUrl, {
+      extraHeaders: buildExtraHeaders(APP_VERSION),
+    });
   });
 
   // ── Open external links in default browser ───────────────────────────────────
@@ -208,14 +202,6 @@ function createWindow(basePath = null) {
   mainWindow.on("closed", () => {
     mainWindow = null;
   });
-
-  // On close: minimize to tray instead of quitting
-  // mainWindow.on("close", (e) => {
-  //   if (!app.isQuitting) {
-  //     e.preventDefault();
-  //     mainWindow.hide();
-  //   }
-  // });
 
   if (IS_DEV) mainWindow.webContents.openDevTools();
 
@@ -249,6 +235,25 @@ const goToPath = (path) => {
   createWindow(path);
   return true;
 };
+
+// Poll until the Next.js server responds
+async function waitForURL(url, intervalMs = 500) {
+  console.log("[main] Waiting for URL:", url);
+  while (true) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(1000) });
+      if (res.ok) {
+        console.log("[main] URL is ready:", url);
+        return;
+      } else {
+        console.log("[main] URL not ready, status:", res.status);
+      }
+    } catch (e) {
+      console.log("[main] Fetch failed:", e.message);
+    }
+    await new Promise((r) => setTimeout(r, intervalMs));
+  }
+}
 
 function setupTray() {
   try {
@@ -307,10 +312,9 @@ function setupTray() {
 function handleDeepLink(url) {
   if (!url) return;
 
-  // Parse: vumeto://action?param=value
   try {
     const parsed = new URL(url);
-    const action = parsed.hostname; // e.g. "open", "auth", "page"
+    const action = parsed.hostname;
     const params = Object.fromEntries(parsed.searchParams.entries());
 
     const path = action === "open" ? params.path : null;
@@ -333,6 +337,9 @@ app.on("second-instance", (_event, commandLine) => {
     if (mainWindow.isMinimized()) mainWindow.restore();
     mainWindow.show();
     mainWindow.focus();
+  } else {
+    // If mainWindow is null (window was closed), create a new one
+    createWindow();
   }
 });
 
@@ -417,7 +424,14 @@ ipcMain.handle("show-window", () => {
   }
 });
 ipcMain.handle("minimize", () => mainWindow?.minimize());
-ipcMain.handle("maximize", () => mainWindow?.maximize());
+ipcMain.handle("maximize", () => {
+  if (!mainWindow) return;
+  if (mainWindow.isMaximized()) {
+    mainWindow.unmaximize();
+  } else {
+    mainWindow.maximize();
+  }
+});
 ipcMain.handle("unmaximize", () => mainWindow?.unmaximize());
 ipcMain.handle("close", () => mainWindow?.close());
 ipcMain.handle("reload", () => mainWindow?.webContents?.reload());

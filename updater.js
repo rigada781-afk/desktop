@@ -55,8 +55,7 @@ function setupAutoUpdater(mainWindow) {
         version: info.version,
       });
     }
-    // Show native dialog prompting user to restart
-    showUpdateReadyDialog(mainWindow, info.version);
+    // showUpdateReadyDialog(mainWindow, info.version);
   });
 
   autoUpdater.on("error", (err) => {

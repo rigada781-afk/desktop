@@ -1,6 +1,6 @@
 {
   "name": "vumeto-desktop",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Vumeto Desktop App",
   "main": "main.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "license": "GPL-3.0",
   "repository": "https://github.com/vumeto/desktop",
   "devDependencies": {
-    "electron": "^41.2.1",
+    "electron": "^33.4.11",
     "electron-builder": "^24.9.1"
   },
   "dependencies": {
