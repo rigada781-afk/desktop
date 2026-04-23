@@ -1,6 +1,6 @@
 // ─── Vumeto Preload Script ────────────────────────────────────────────────────
 
-const { contextBridge, ipcRenderer } = require("electron");
+const { contextBridge, ipcRenderer, webFrame } = require("electron");
 
 contextBridge.exposeInMainWorld("vumetoDesktop", {
   // ── App info ─────────────────────────────────────────────────────────────────
@@ -59,6 +59,17 @@ contextBridge.exposeInMainWorld("vumetoDesktop", {
     offDeleted: (cb) => ipcRenderer.removeListener("download:deleted", cb),
   },
 
+  getZoom: () => webFrame.getZoomFactor(),
+  setZoom: (z) => {
+    webFrame.setZoomFactor(z);
+    return webFrame.getZoomFactor();
+  },
+  isAlwaysOnTop: () => ipcRenderer.invoke("is-always-on-top"),
+  toggleAlwaysOnTop: () => ipcRenderer.invoke("toggle-always-on-top"),
+  isPiP: () => ipcRenderer.invoke("isPiP"),
+  updatePiPAspectRatio: (aspectRatio) =>
+    ipcRenderer.invoke("update-pip-aspect-ratio", aspectRatio),
+  togglePiP: (aspectRatio) => ipcRenderer.invoke("toggle-pip", aspectRatio),
   minimize: () => ipcRenderer.invoke("minimize"),
   maximize: () => ipcRenderer.invoke("maximize"),
   unmaximize: () => ipcRenderer.invoke("unmaximize"),
@@ -116,6 +127,13 @@ interface VumetoDesktop {
   onDeepLink: (callback: (data: DeepLinkData) => void) => void;
 
   // Window control
+  getZoom: () => Promise<number>;
+  setZoom: (zoom: number) => Promise<number>;
+  isAlwaysOnTop: () => Promise<boolean>;
+  toggleAlwaysOnTop: () => Promise<boolean>;
+  isPiP: () => Promise<boolean>;
+  updatePiPAspectRatio: (aspectRatio: number) => Promise<void>;
+  togglePiP: (aspectRatio: number) => Promise<boolean>;
   minimize: () => void;
   maximize: () => void;
   unmaximize: () => void;

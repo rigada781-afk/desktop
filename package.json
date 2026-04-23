@@ -1,6 +1,6 @@
 {
   "name": "vumeto-desktop",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Vumeto Desktop App",
   "main": "main.js",
   "scripts": {
@@ -92,8 +92,9 @@
       "category": "Multimedia"
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "runAfterFinish": true

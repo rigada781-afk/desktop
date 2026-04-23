@@ -9,6 +9,7 @@ const {
   Menu,
   nativeImage,
   globalShortcut,
+  screen,
 } = require("electron");
 const Store = require("electron-store");
 const path = require("path");
@@ -49,6 +50,8 @@ if (!gotLock) {
 // ── Store ───────────────────────────────────────────────────────────────
 
 const store = new Store();
+
+let isPiP = false;
 
 // ── Deep link protocol registration ──────────────────────────────────────────
 let initialDeepLink = null;
@@ -241,7 +244,12 @@ async function waitForURL(url, intervalMs = 500) {
   console.log("[main] Waiting for URL:", url);
   while (true) {
     try {
-      const res = await fetch(url, { signal: AbortSignal.timeout(1000) });
+      const res = await fetch(
+        url,
+        process.argv.includes("--loc")
+          ? {}
+          : { signal: AbortSignal.timeout(5000) },
+      );
       if (res.ok) {
         console.log("[main] URL is ready:", url);
         return;
@@ -396,6 +404,27 @@ app.whenReady().then(() => {
       mainWindow.focus();
     }
   });
+
+  // ── Zoom shortcuts ────────────────────────────────────────────────────────────
+  globalShortcut.register("CommandOrControl+=", () => {
+    if (mainWindow) {
+      mainWindow.webContents.setZoomLevel(
+        mainWindow.webContents.getZoomLevel() + 1,
+      );
+    }
+  });
+  globalShortcut.register("CommandOrControl+-", () => {
+    if (mainWindow) {
+      mainWindow.webContents.setZoomLevel(
+        mainWindow.webContents.getZoomLevel() - 1,
+      );
+    }
+  });
+  globalShortcut.register("CommandOrControl+0", () => {
+    if (mainWindow) {
+      mainWindow.webContents.setZoomLevel(0);
+    }
+  });
 });
 
 app.on("window-all-closed", () => {
@@ -406,17 +435,27 @@ app.on("window-all-closed", () => {
 app.on("before-quit", () => {
   app.isQuitting = true;
   stopUpdateTimer();
+  globalShortcut.unregisterAll();
   if (expressServer) {
     expressServer.close(() => console.log("[express] Server closed"));
   }
 });
 
+let wasMaximizedBeforePiP = false;
 // ── IPC handlers ──────────────────────────────────────────────────────────────
 ipcMain.handle("get-app-version", () => APP_VERSION);
 ipcMain.handle("get-platform", () => process.platform);
 ipcMain.handle("open-external", (_, url) => shell.openExternal(url));
 ipcMain.handle("open-devtools", () => mainWindow?.webContents?.openDevTools());
 ipcMain.handle("install-update", () => installUpdate());
+ipcMain.handle("is-always-on-top", () => {
+  return mainWindow.isAlwaysOnTop();
+});
+ipcMain.handle("toggle-always-on-top", () => {
+  const newState = !mainWindow.isAlwaysOnTop();
+  mainWindow.setAlwaysOnTop(newState);
+  return newState;
+});
 ipcMain.handle("show-window", () => {
   if (mainWindow) {
     mainWindow.show();
@@ -433,7 +472,10 @@ ipcMain.handle("maximize", () => {
   }
 });
 ipcMain.handle("unmaximize", () => mainWindow?.unmaximize());
-ipcMain.handle("close", () => mainWindow?.close());
+ipcMain.handle("close", () => {
+  mainWindow?.close();
+  isPiP = false;
+});
 ipcMain.handle("reload", () => mainWindow?.webContents?.reload());
 ipcMain.handle("force-reload", () =>
   mainWindow?.webContents?.reloadIgnoringCache(),
@@ -451,3 +493,64 @@ ipcMain.handle("download:pause", (_, id) => pauseDownload(id));
 ipcMain.handle("download:resume", (_, id) => resumeDownload(id));
 ipcMain.handle("download:cancel", (_, id) => cancelDownload(id));
 ipcMain.handle("download:delete", (_, id) => deleteDownload(id));
+
+ipcMain.handle("isPiP", () => isPiP);
+ipcMain.handle("update-pip-aspect-ratio", (_, aspectRatio) => {
+  storedAspectRatio = aspectRatio;
+  if (mainWindow && isPiP) {
+    mainWindow.setAspectRatio(aspectRatio);
+  }
+});
+ipcMain.handle("toggle-pip", (_, aspectRatio) => {
+  if (!mainWindow) return;
+
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
+  if (!isPiP) {
+    previousBounds = mainWindow.getBounds();
+
+    const defaultWidth = 360;
+    const defaultHeight = 200;
+
+    const bounds = {
+      width: defaultWidth,
+      height: defaultHeight,
+      x: width - defaultWidth - 20,
+      y: height - defaultHeight - 20,
+    };
+
+    const isMaximized = mainWindow.isMaximized();
+    wasMaximizedBeforePiP = isMaximized;
+    if (isMaximized) {
+      mainWindow.unmaximize();
+    }
+
+    mainWindow.setAlwaysOnTop(true, "floating");
+    mainWindow.setResizable(true); // ✅ allow resize
+    mainWindow.setMinimumSize(300, 170); // optional safety
+    if (aspectRatio) {
+      mainWindow.setAspectRatio(aspectRatio);
+    }
+
+    mainWindow.setBounds(bounds, true); // animate
+
+    isPiP = true;
+  } else {
+    if (previousBounds) {
+      mainWindow.setBounds(previousBounds);
+    }
+
+    isPiP = false;
+
+    mainWindow.setAlwaysOnTop(false);
+    mainWindow.setResizable(true);
+    mainWindow.setAspectRatio(0);
+
+    if (wasMaximizedBeforePiP) {
+      mainWindow.maximize();
+      wasMaximizedBeforePiP = false;
+    }
+  }
+
+  return isPiP;
+});
