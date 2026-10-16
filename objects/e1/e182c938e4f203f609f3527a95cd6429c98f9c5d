@@ -1,0 +1,676 @@
+{
+  "structures": [
+    {
+      "id": "minecraft:mineshaft",
+      "displayName": "Mineshaft",
+      "isVanilla": true
+    },
+    {
+      "id": "minecraft:pillager_outpost",
+      "displayName": "Pillager Outpost",
+      "isVanilla": true
+    },
+    {
+      "id": "minecraft:ruined_portal",
+      "displayName": "Ruined Portal",
+      "isVanilla": true
+    },
+    {
+      "id": "minecraft:stronghold",
+      "displayName": "Stronghold",
+      "isVanilla": true
+    },
+    {
+      "id": "minecraft:trial_chambers",
+      "displayName": "Trial Chambers",
+      "isVanilla": true
+    },
+    {
+      "id": "minecraft:village_plains",
+      "displayName": "Village Plains",
+      "isVanilla": true
+    },
+    {
+      "id": "alexscaves:abyssal_ruins",
+      "displayName": "Abyssal Ruins",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:acid_pit",
+      "displayName": "Acid Pit",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:cake_cave",
+      "displayName": "Cake Cave",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:dino_bowl",
+      "displayName": "Dino Bowl",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:donut_arch",
+      "displayName": "Donut Arch",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:ferrocave",
+      "displayName": "Ferrocave",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:forlorn_bridge",
+      "displayName": "Forlorn Bridge",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:forlorn_canyon",
+      "displayName": "Forlorn Canyon",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:gingerbread_town",
+      "displayName": "Gingerbread Town",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:licowitch_tower",
+      "displayName": "Licowitch Tower",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:ocean_trench",
+      "displayName": "Ocean Trench",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:soda_bottle",
+      "displayName": "Soda Bottle",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:underground_cabin",
+      "displayName": "Underground Cabin",
+      "isVanilla": false
+    },
+    {
+      "id": "alexscaves:volcano",
+      "displayName": "Volcano",
+      "isVanilla": false
+    },
+    {
+      "id": "apotheosis:tower_main",
+      "displayName": "Tower Main",
+      "isVanilla": false
+    },
+    {
+      "id": "betterdungeons:skeleton_dungeon",
+      "displayName": "Skeleton Dungeon",
+      "isVanilla": false
+    },
+    {
+      "id": "betterdungeons:small_dungeon",
+      "displayName": "Small Dungeon",
+      "isVanilla": false
+    },
+    {
+      "id": "betterdungeons:spider_dungeon",
+      "displayName": "Spider Dungeon",
+      "isVanilla": false
+    },
+    {
+      "id": "betterdungeons:zombie_dungeon",
+      "displayName": "Zombie Dungeon",
+      "isVanilla": false
+    },
+    {
+      "id": "bettermineshafts:mineshaft_oak",
+      "displayName": "Mineshaft Oak",
+      "isVanilla": false
+    },
+    {
+      "id": "betterstrongholds:stronghold",
+      "displayName": "Stronghold",
+      "isVanilla": false
+    },
+    {
+      "id": "bosses_of_mass_destruction:void_blossom",
+      "displayName": "Void Blossom",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:big_windmill",
+      "displayName": "Big Windmill",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:cave_ruins",
+      "displayName": "Cave Ruins",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:dungeon_plains",
+      "displayName": "Dungeon Plains",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:grot",
+      "displayName": "Grot",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:kings_castle",
+      "displayName": "Kings Castle",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:not__junos_house",
+      "displayName": "Not Junos House",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:oak_house",
+      "displayName": "Oak House",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:pillage",
+      "displayName": "Pillage",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:plains_small",
+      "displayName": "Plains Small",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:quarry",
+      "displayName": "Quarry",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:railroad",
+      "displayName": "Railroad",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:ruins",
+      "displayName": "Ruins",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:the_bunker",
+      "displayName": "The Bunker",
+      "isVanilla": false
+    },
+    {
+      "id": "create_ltab:thecastle",
+      "displayName": "Thecastle",
+      "isVanilla": false
+    },
+    {
+      "id": "create_sky_village:highwind_village",
+      "displayName": "Highwind Village",
+      "isVanilla": false
+    },
+    {
+      "id": "create_sky_village:skyvillage",
+      "displayName": "Skyvillage",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:bathhouse",
+      "displayName": "Bathhouse",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:coliseum",
+      "displayName": "Coliseum",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:foundry",
+      "displayName": "Foundry",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:giant_mushroom",
+      "displayName": "Giant Mushroom",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:heavenly_challenger",
+      "displayName": "Heavenly Challenger",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:heavenly_conqueror",
+      "displayName": "Heavenly Conqueror",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:heavenly_rider",
+      "displayName": "Heavenly Rider",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:illager_campsite",
+      "displayName": "Illager Campsite",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:illager_windmill",
+      "displayName": "Illager Windmill",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:kisegi_sanctuary",
+      "displayName": "Kisegi Sanctuary",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:lighthouse",
+      "displayName": "Lighthouse",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:merchant_campsite",
+      "displayName": "Merchant Campsite",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:mining_complex",
+      "displayName": "Mining Complex",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:small_blimp",
+      "displayName": "Small Blimp",
+      "isVanilla": false
+    },
+    {
+      "id": "dungeons_arise:wishing_well",
+      "displayName": "Wishing Well",
+      "isVanilla": false
+    },
+    {
+      "id": "eternal_starlight:portal_ruins_common",
+      "displayName": "Portal Ruins Common",
+      "isVanilla": false
+    },
+    {
+      "id": "graveyard:large_graveyard",
+      "displayName": "Large Graveyard",
+      "isVanilla": false
+    },
+    {
+      "id": "graveyard:small_grave",
+      "displayName": "Small Grave",
+      "isVanilla": false
+    },
+    {
+      "id": "graveyard:small_graveyard",
+      "displayName": "Small Graveyard",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:chillhall_plains_refuge",
+      "displayName": "Chillhall Plains Refuge",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:eldermoor",
+      "displayName": "Eldermoor",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:glacierfall_keep_plains",
+      "displayName": "Glacierfall Keep Plains",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:glimmervault_fortress_plains",
+      "displayName": "Glimmervault Fortress Plains",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:gnomish_hut",
+      "displayName": "Gnomish Hut",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:grain_sack_fort",
+      "displayName": "Grain Sack Fort",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:grain_sack_hold",
+      "displayName": "Grain Sack Hold",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:grain_sack_keep",
+      "displayName": "Grain Sack Keep",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:meadow_flower_ruin",
+      "displayName": "Meadow Flower Ruin",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:meadow_ruin",
+      "displayName": "Meadow Ruin",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:mill_stone",
+      "displayName": "Mill Stone",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:river_bend_watch",
+      "displayName": "River Bend Watch",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:silentgale_citadel_plains",
+      "displayName": "Silentgale Citadel Plains",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:slate_needle",
+      "displayName": "Slate Needle",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:slate_thin_needle",
+      "displayName": "Slate Thin Needle",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:stonyfell_outpost_plains",
+      "displayName": "Stonyfell Outpost Plains",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:thatch_outpost",
+      "displayName": "Thatch Outpost",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:thatch_roof",
+      "displayName": "Thatch Roof",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:tor_tower",
+      "displayName": "Tor Tower",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:weathered_colosseum",
+      "displayName": "Weathered Colosseum",
+      "isVanilla": false
+    },
+    {
+      "id": "grim_kingdoms:zweiberg_plains",
+      "displayName": "Zweiberg Plains",
+      "isVanilla": false
+    },
+    {
+      "id": "paraglider:tarrey_town_goddess_statue",
+      "displayName": "Tarrey Town Goddess Statue",
+      "isVanilla": false
+    },
+    {
+      "id": "paraglider:underground_horned_statue",
+      "displayName": "Underground Horned Statue",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:bridge_bridge_0",
+      "displayName": "Bridge Bridge 0",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:bridge_bridge_1",
+      "displayName": "Bridge Bridge 1",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_bench",
+      "displayName": "Roadside Bench",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_campfire",
+      "displayName": "Roadside Campfire",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_campsite_1",
+      "displayName": "Roadside Campsite 1",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_campsite_2",
+      "displayName": "Roadside Campsite 2",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_campsite_3",
+      "displayName": "Roadside Campsite 3",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_grave_easter_egg",
+      "displayName": "Roadside Grave Easter Egg",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_grave_fogg05",
+      "displayName": "Roadside Grave Fogg05",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_grave_magic_muggle",
+      "displayName": "Roadside Grave Magic Muggle",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_grave_notch",
+      "displayName": "Roadside Grave Notch",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_grave_technoblade",
+      "displayName": "Roadside Grave Technoblade",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_maid_house",
+      "displayName": "Roadside Maid House",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_sakura_coffee_house",
+      "displayName": "Roadside Sakura Coffee House",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:roadside_village",
+      "displayName": "Roadside Village",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:spawn_cabin",
+      "displayName": "Spawn Cabin",
+      "isVanilla": false
+    },
+    {
+      "id": "roadweaver:stone_bridge_shiqiao",
+      "displayName": "Stone Bridge Shiqiao",
+      "isVanilla": false
+    },
+    {
+      "id": "soulsweapons:corrupt_altar",
+      "displayName": "Corrupt Altar",
+      "isVanilla": false
+    }
+  ],
+  "tags": [
+    {
+      "tagId": "minecraft:eye_of_ender_located",
+      "displayName": "#Eye Of Ender Located",
+      "structureIds": [
+        "minecraft:stronghold",
+        "betterstrongholds:stronghold"
+      ]
+    },
+    {
+      "tagId": "minecraft:mineshaft",
+      "displayName": "#Mineshaft",
+      "structureIds": [
+        "minecraft:mineshaft",
+        "bettermineshafts:mineshaft_oak"
+      ]
+    },
+    {
+      "tagId": "minecraft:on_trial_chambers_maps",
+      "displayName": "#On Trial Chambers Maps",
+      "structureIds": [
+        "minecraft:trial_chambers"
+      ]
+    },
+    {
+      "tagId": "minecraft:on_woodland_explorer_maps",
+      "displayName": "#On Woodland Explorer Maps",
+      "structureIds": [
+        "dungeons_arise:foundry"
+      ]
+    },
+    {
+      "tagId": "minecraft:ruined_portal",
+      "displayName": "#Ruined Portal",
+      "structureIds": [
+        "minecraft:ruined_portal"
+      ]
+    },
+    {
+      "tagId": "minecraft:village",
+      "displayName": "#Village",
+      "structureIds": [
+        "minecraft:village_plains"
+      ]
+    },
+    {
+      "tagId": "betterdungeons:better_dungeons",
+      "displayName": "#Better Dungeons",
+      "structureIds": [
+        "betterdungeons:skeleton_dungeon",
+        "betterdungeons:small_dungeon",
+        "betterdungeons:spider_dungeon",
+        "betterdungeons:zombie_dungeon"
+      ]
+    },
+    {
+      "tagId": "bettermineshafts:better_mineshafts",
+      "displayName": "#Better Mineshafts",
+      "structureIds": [
+        "bettermineshafts:mineshaft_oak"
+      ]
+    },
+    {
+      "tagId": "betterstrongholds:better_strongholds",
+      "displayName": "#Better Strongholds",
+      "structureIds": [
+        "betterstrongholds:stronghold"
+      ]
+    },
+    {
+      "tagId": "create_ltab:core",
+      "displayName": "#Core",
+      "structureIds": [
+        "create_ltab:dungeon_plains",
+        "create_ltab:grot",
+        "create_ltab:quarry"
+      ]
+    },
+    {
+      "tagId": "dungeons_arise:explorer_maps/foundry",
+      "displayName": "#Explorer Maps/foundry",
+      "structureIds": [
+        "dungeons_arise:foundry"
+      ]
+    },
+    {
+      "tagId": "dungeons_arise:explorer_maps/illager_campsite",
+      "displayName": "#Explorer Maps/illager Campsite",
+      "structureIds": [
+        "dungeons_arise:illager_campsite"
+      ]
+    },
+    {
+      "tagId": "dungeons_arise:explorer_maps/mining_complex",
+      "displayName": "#Explorer Maps/mining Complex",
+      "structureIds": [
+        "dungeons_arise:mining_complex"
+      ]
+    },
+    {
+      "tagId": "alexscaves:gingerbread_men_wander_through",
+      "displayName": "#Gingerbread Men Wander Through",
+      "structureIds": [
+        "alexscaves:gingerbread_town"
+      ]
+    },
+    {
+      "tagId": "create_ltab:kings_castle",
+      "displayName": "#Kings Castle",
+      "structureIds": [
+        "create_ltab:kings_castle"
+      ]
+    },
+    {
+      "tagId": "morevillagers:on_mineshaft_explorer_maps",
+      "displayName": "#On Mineshaft Explorer Maps",
+      "structureIds": [
+        "bettermineshafts:mineshaft_oak"
+      ]
+    },
+    {
+      "tagId": "alexscaves:on_underground_cabin_maps",
+      "displayName": "#On Underground Cabin Maps",
+      "structureIds": [
+        "alexscaves:underground_cabin"
+      ]
+    },
+    {
+      "tagId": "create_ltab:plains",
+      "displayName": "#Plains",
+      "structureIds": [
+        "create_ltab:big_windmill",
+        "create_ltab:oak_house",
+        "create_ltab:railroad",
+        "create_ltab:thecastle"
+      ]
+    },
+    {
+      "tagId": "eternal_starlight:portal_ruins",
+      "displayName": "#Portal Ruins",
+      "structureIds": [
+        "eternal_starlight:portal_ruins_common"
+      ]
+    },
+    {
+      "tagId": "bosses_of_mass_destruction:void_lily_target",
+      "displayName": "#Void Lily Target",
+      "structureIds": [
+        "bosses_of_mass_destruction:void_blossom"
+      ]
+    }
+  ]
+}

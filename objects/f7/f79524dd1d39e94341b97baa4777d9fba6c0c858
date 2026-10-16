@@ -1,0 +1,13 @@
+{
+  "id": "natural_sparse_jungle",
+  "name": "Sparse Jungle Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:coarse_dirt",
+    "minecraft:gravel"
+  ],
+  "slabMaterials": [
+    "minecraft:jungle_slab"
+  ]
+}

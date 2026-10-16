@@ -1,0 +1,13 @@
+{
+  "id": "natural_forest",
+  "name": "Forest Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:coarse_dirt",
+    "minecraft:rooted_dirt"
+  ],
+  "slabMaterials": [
+    "minecraft:oak_slab"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "natural_flower_forest",
+  "name": "Flower Forest Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:coarse_dirt",
+    "minecraft:moss_block"
+  ],
+  "slabMaterials": [
+    "minecraft:oak_slab"
+  ]
+}

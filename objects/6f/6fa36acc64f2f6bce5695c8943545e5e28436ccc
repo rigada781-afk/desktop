@@ -1,0 +1,13 @@
+{
+  "id": "natural_ice_spikes",
+  "name": "Ice Spikes Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:packed_ice",
+    "minecraft:blue_ice",
+    "minecraft:snow_block"
+  ],
+  "slabMaterials": [
+    "minecraft:spruce_slab"
+  ]
+}

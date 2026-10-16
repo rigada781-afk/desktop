@@ -1,0 +1,185 @@
+{
+    // The version of the config file. Do not change this unless you know what you are doing.
+    "rconfig:version": 0,
+    "items": {
+        "oxygen_chargers": {
+            // Type: Integer
+            "distribution_interval": 10
+        },
+        "oxygen_can": {
+            // Type: Long
+            "fluid_capacity": 500,
+            // Type: Long
+            "fluid_transfer": 125
+        },
+        "netherite_oxygen_can": {
+            // Type: Long
+            "fluid_capacity": 1000,
+            // Type: Long
+            "fluid_transfer": 250
+        }
+    },
+    "machines": {
+        "fuel_loader": {
+            // Type: Long
+            "fluid_capacity": 8000,
+            // Type: Long
+            "fluid_transfer": 250,
+            /*
+             * Blocks from Fuel Loader to each direction
+             * Type: Integer
+             */
+            "working_range": 2
+        },
+        "automation_nasa_workbench": {
+            // Type: Long
+            "energy_capacity": 9600,
+            // Type: Long
+            "energy_usage": 24,
+            // Type: Integer
+            "cook_time": 200
+        },
+        "gravity_normalizer": {
+            // Type: Long
+            "energy_capacity": 9600,
+            /*
+             * Blocks = x * y * z
+             * Type: Double
+             */
+            "energy_per_blocks": 0.5,
+            // Type: Integer
+            "max_length": 31,
+            // Type: Integer
+            "proof_duration": 10
+        },
+        "rocket_sensor": {
+            /*
+             * Blocks from Rocket Sensor to each direction
+             * Type: Integer
+             */
+            "working_range": 2
+        }
+    },
+    "enchantments": {
+        // Show tooltip on this mod's enchanted book
+        "tooltip_enabled": true,
+        /*
+         * Tooltip will don't show when 'Enchantment Descriptions' or 'Enchantment Lore' or 'CoFH Core' installed.
+         * but, if this set 'true' show tooltip with ignore that mods.
+         */
+        "tooltip_ignore": false,
+        "space_fire_proof": {
+            /*
+             * Energy usage for proof [in every 10 ticks]
+             * Type: Integer
+             */
+            "energy_using": 10,
+            /*
+             * Durability usage for proof
+             * Type: Integer
+             */
+            "durability_using": 1,
+            /*
+             * Proof duration on using durability [ticks, be multiple of 10]
+             * Type: Integer
+             */
+            "durability_duration": 60
+        },
+        "acid_rain_proof": {
+            /*
+             * Energy usage for proof [in every 10 ticks]
+             * Type: Integer
+             */
+            "energy_using": 10,
+            /*
+             * Durability usage for proof
+             * Type: Integer
+             */
+            "durability_using": 1,
+            /*
+             * Proof duration on using durability [ticks, be multiple of 10]
+             * Type: Integer
+             */
+            "durability_duration": 60
+        },
+        "gravity_normalizing": {
+            /*
+             * Energy usage for proof [in every 10 ticks]
+             * Type: Integer
+             */
+            "energy_using": 10,
+            /*
+             * Durability usage for proof
+             * Type: Integer
+             */
+            "durability_using": 1,
+            /*
+             * Proof duration on using durability [ticks, be multiple of 10]
+             * Type: Integer
+             */
+            "durability_duration": 60
+        }
+    },
+    "compats": {
+        "mekanism": {
+            "modules_space_breathing": {
+                /*
+                 * Energy usage per mb when produce Mekanism oxygen to player in water, rain
+                 * Type: Integer
+                 */
+                "energy_using_produce": 200
+            },
+            "modules_space_fire_proof": {
+                /*
+                 * Energy usage for proof in every ticks [in every 10 ticks]
+                 * Type: Integer
+                 */
+                "energy_using_proof": 100
+            },
+            "modules_acid_rain_proof": {
+                /*
+                 * Energy usage for proof in every ticks [in every 10 ticks]
+                 * Type: Integer
+                 */
+                "energy_using_proof": 100
+            },
+            "modules_gravity_normalizing": {
+                /*
+                 * Energy usage for proof in every ticks [in every 10 ticks]
+                 * Type: Integer
+                 */
+                "energy_using_proof": 100
+            }
+        },
+        "pneumaticcraft": {
+            "upgades_space_breathing": {
+                /*
+                 * Air usage for provide oxygen [in every 30 ticks]
+                 * Type: Integer
+                 */
+                "air_using": 150
+            },
+            "upgades_space_fire_proof": {
+                /*
+                 * Air usage for proof [in every 10 ticks]
+                 * Type: Integer
+                 */
+                "air_using": 50
+            },
+            "upgades_acid_rain_proof": {
+                /*
+                 * Air usage for proof [in every 10 ticks]
+                 * Type: Integer
+                 */
+                "air_using": 50
+            },
+            "upgades_gravity_normalizing": {
+                /*
+                 * Air usage for proof [in every 10 ticks]
+                 * Type: Integer
+                 */
+                "air_using": 50
+            }
+        }
+    }
+}

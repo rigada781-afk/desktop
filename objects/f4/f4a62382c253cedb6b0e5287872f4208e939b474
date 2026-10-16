@@ -1,0 +1,1887 @@
+# File Specification: https://gist.github.com/Shadows-of-Fire/88ac714a758636c57a52e32ace5474c1
+
+# 
+
+entity {
+    # A list of full names, which are used in the generation of boss names. May be empty only if name parts is not empty.
+    # Default: [Biscuit], [Elisande], [Willow], [Gunnar], [Bippy], [Butto], [Prim], [Tyrael], [Bajorno], [Michael Morbius], [Morbius], [Arun], [Panez], [Doomsday], [Vanamar], [WhatTheDrunk], [Lothrazar], [Chelly], [Chelicia], [Darsh], [Dariush], [Cheese E Piloza], [Bing], [Royal], [NoWayHere], [SwankyStella], [Isosahedron], [Asfalis], [Biz], [Icicle], [Darko], [Shadows], [Katarina], [Faellynna], [Diliviel], [Jank], [Albert], [Andrew], [Anderson], [Andy], [Allan], [Arthur], [Aaron], [Allison], [Arielle], [Amanda], [Anne], [Annie], [Amy], [Alana], [Brandon], [Brady], [Bernard], [Ben], [Benjamin], [Bob], [Bobette], [Brooke], [Brandy], [Beatrice], [Bea], [Bella], [Becky], [Carlton], [Carl], [Calvin], [Cameron], [Carson], [Chase], [Cassandra], [Cassie], [Cas], [Carol], [Carly], [Cherise], [Charlotte], [Cheryl], [Chasity], [Danny], [Drake], [Daniel], [Derrel], [David], [Dave], [Donovan], [Don], [Donald], [Drew], [Derrick], [Darla], [Donna], [Dora], [Danielle], [Edward], [Elliot], [Ed], [Edson], [Elton], [Eddison], [Earl], [Eric], [Ericson], [Eddie], [Ediovany], [Emma], [Elizabeth], [Eliza], [Esperanza], [Esper], [Esmeralda], [Emi], [Emily], [Elaine], [Fernando], [Ferdinand], [Fred], [Feddie], [Fredward], [Frank], [Franklin], [Felix], [Felicia], [Fran], [Greg], [Gregory], [George], [Gerald], [Gina], [Geraldine], [Gabby], [Hendrix], [Henry], [Hobbes], [Herbert], [Heath], [Henderson], [Helga], [Hera], [Helen], [Helena], [Hannah], [Ike], [Issac], [Israel], [Ismael], [Irlanda], [Isabelle], [Irene], [Irenia], [Jimmy], [Jim], [Justin], [Jacob], [Jake], [Jon], [Johnson], [Jonny], [Jonathan], [Josh], [Joshua], [Julian], [Jesus], [Jericho], [Jeb], [Jess], [Joan], [Jill], [Jillian], [Jessica], [Jennifer], [Jenny], [Jen], [Judy], [Kenneth], [Kenny], [Ken], [Keith], [Kevin], [Karen], [Kassandra], [Kassie], [Leonard], [Leo], [Leroy], [Lee], [Lenny], [Luke], [Lucas], [Liam], [Lorraine], [Latasha], [Lauren], [Laquisha], [Livia], [Lydia], [Lila], [Lilly], [Lillian], [Lilith], [Lana], [Mason], [Mike], [Mickey], [Mario], [Manny], [Mark], [Marcus], [Martin], [Marty], [Matthew], [Matt], [Max], [Maximillian], [Marth], [Mia], [Marriah], [Maddison], [Maddie], [Marissa], [Miranda], [Mary], [Martha], [Melonie], [Melody], [Mel], [Minnie], [Nathan], [Nathaniel], [Nate], [Ned], [Nick], [Norman], [Nicholas], [Natasha], [Nicki], [Nora], [Nelly], [Nina], [Orville], [Oliver], [Orlando], [Owen], [Olsen], [Odin], [Olaf], [Ortega], [Olivia], [Patrick], [Pat], [Paul], [Perry], [Pinnochio], [Patrice], [Patricia], [Pennie], [Petunia], [Patti], [Pernelle], [Quade], [Quincy], [Quentin], [Quinn], [Roberto], [Robbie], [Rob], [Robert], [Roy], [Roland], [Ronald], [Richard], [Rick], [Ricky], [Rose], [Rosa], [Rhonda], [Rebecca], [Roberta], [Sparky], [Shiloh], [Stephen], [Steve], [Saul], [Sheen], [Shane], [Sean], [Sampson], [Samuel], [Sammy], [Stefan], [Sasha], [Sam], [Susan], [Suzy], [Shelby], [Samantha], [Sheila], [Sharon], [Sally], [Stephanie], [Sandra], [Sandy], [Sage], [Tim], [Thomas], [Thompson], [Tyson], [Tyler], [Tom], [Tyrone], [Timmothy], [Tamara], [Tabby], [Tabitha], [Tessa], [Tiara], [Tyra], [Uriel], [Ursala], [Uma], [Victor], [Vincent], [Vince], [Vance], [Vinny], [Velma], [Victoria], [Veronica], [Wilson], [Wally], [Wallace], [Will], [Wilard], [William], [Wilhelm], [Xavier], [Xandra], [Young], [Yvonne], [Yolanda], [Zach], [Zachary]
+    S:Names <
+        Biscuit
+        Elisande
+        Willow
+        Gunnar
+        Bippy
+        Butto
+        Prim
+        Tyrael
+        Bajorno
+        Michael Morbius
+        Morbius
+        Arun
+        Panez
+        Doomsday
+        Vanamar
+        WhatTheDrunk
+        Lothrazar
+        Chelly
+        Chelicia
+        Darsh
+        Dariush
+        Cheese E Piloza
+        Bing
+        Royal
+        NoWayHere
+        SwankyStella
+        Isosahedron
+        Asfalis
+        Biz
+        Icicle
+        Darko
+        Shadows
+        Katarina
+        Faellynna
+        Diliviel
+        Jank
+        Albert
+        Andrew
+        Anderson
+        Andy
+        Allan
+        Arthur
+        Aaron
+        Allison
+        Arielle
+        Amanda
+        Anne
+        Annie
+        Amy
+        Alana
+        Brandon
+        Brady
+        Bernard
+        Ben
+        Benjamin
+        Bob
+        Bobette
+        Brooke
+        Brandy
+        Beatrice
+        Bea
+        Bella
+        Becky
+        Carlton
+        Carl
+        Calvin
+        Cameron
+        Carson
+        Chase
+        Cassandra
+        Cassie
+        Cas
+        Carol
+        Carly
+        Cherise
+        Charlotte
+        Cheryl
+        Chasity
+        Danny
+        Drake
+        Daniel
+        Derrel
+        David
+        Dave
+        Donovan
+        Don
+        Donald
+        Drew
+        Derrick
+        Darla
+        Donna
+        Dora
+        Danielle
+        Edward
+        Elliot
+        Ed
+        Edson
+        Elton
+        Eddison
+        Earl
+        Eric
+        Ericson
+        Eddie
+        Ediovany
+        Emma
+        Elizabeth
+        Eliza
+        Esperanza
+        Esper
+        Esmeralda
+        Emi
+        Emily
+        Elaine
+        Fernando
+        Ferdinand
+        Fred
+        Feddie
+        Fredward
+        Frank
+        Franklin
+        Felix
+        Felicia
+        Fran
+        Greg
+        Gregory
+        George
+        Gerald
+        Gina
+        Geraldine
+        Gabby
+        Hendrix
+        Henry
+        Hobbes
+        Herbert
+        Heath
+        Henderson
+        Helga
+        Hera
+        Helen
+        Helena
+        Hannah
+        Ike
+        Issac
+        Israel
+        Ismael
+        Irlanda
+        Isabelle
+        Irene
+        Irenia
+        Jimmy
+        Jim
+        Justin
+        Jacob
+        Jake
+        Jon
+        Johnson
+        Jonny
+        Jonathan
+        Josh
+        Joshua
+        Julian
+        Jesus
+        Jericho
+        Jeb
+        Jess
+        Joan
+        Jill
+        Jillian
+        Jessica
+        Jennifer
+        Jenny
+        Jen
+        Judy
+        Kenneth
+        Kenny
+        Ken
+        Keith
+        Kevin
+        Karen
+        Kassandra
+        Kassie
+        Leonard
+        Leo
+        Leroy
+        Lee
+        Lenny
+        Luke
+        Lucas
+        Liam
+        Lorraine
+        Latasha
+        Lauren
+        Laquisha
+        Livia
+        Lydia
+        Lila
+        Lilly
+        Lillian
+        Lilith
+        Lana
+        Mason
+        Mike
+        Mickey
+        Mario
+        Manny
+        Mark
+        Marcus
+        Martin
+        Marty
+        Matthew
+        Matt
+        Max
+        Maximillian
+        Marth
+        Mia
+        Marriah
+        Maddison
+        Maddie
+        Marissa
+        Miranda
+        Mary
+        Martha
+        Melonie
+        Melody
+        Mel
+        Minnie
+        Nathan
+        Nathaniel
+        Nate
+        Ned
+        Nick
+        Norman
+        Nicholas
+        Natasha
+        Nicki
+        Nora
+        Nelly
+        Nina
+        Orville
+        Oliver
+        Orlando
+        Owen
+        Olsen
+        Odin
+        Olaf
+        Ortega
+        Olivia
+        Patrick
+        Pat
+        Paul
+        Perry
+        Pinnochio
+        Patrice
+        Patricia
+        Pennie
+        Petunia
+        Patti
+        Pernelle
+        Quade
+        Quincy
+        Quentin
+        Quinn
+        Roberto
+        Robbie
+        Rob
+        Robert
+        Roy
+        Roland
+        Ronald
+        Richard
+        Rick
+        Ricky
+        Rose
+        Rosa
+        Rhonda
+        Rebecca
+        Roberta
+        Sparky
+        Shiloh
+        Stephen
+        Steve
+        Saul
+        Sheen
+        Shane
+        Sean
+        Sampson
+        Samuel
+        Sammy
+        Stefan
+        Sasha
+        Sam
+        Susan
+        Suzy
+        Shelby
+        Samantha
+        Sheila
+        Sharon
+        Sally
+        Stephanie
+        Sandra
+        Sandy
+        Sage
+        Tim
+        Thomas
+        Thompson
+        Tyson
+        Tyler
+        Tom
+        Tyrone
+        Timmothy
+        Tamara
+        Tabby
+        Tabitha
+        Tessa
+        Tiara
+        Tyra
+        Uriel
+        Ursala
+        Uma
+        Victor
+        Vincent
+        Vince
+        Vance
+        Vinny
+        Velma
+        Victoria
+        Veronica
+        Wilson
+        Wally
+        Wallace
+        Will
+        Wilard
+        William
+        Wilhelm
+        Xavier
+        Xandra
+        Young
+        Yvonne
+        Yolanda
+        Zach
+        Zachary
+     >
+
+    # A list of name pieces, which can be spliced together to create full names.  May be empty only if names is not empty.
+    # Default: [Prim], [Morb], [Ius], [Kat], [Chel], [Bing], [Darsh], [Jank], [Dark], [Osto], [Grab], [Thar], [Ger], [Ald], [Mas], [On], [O], [Din], [Thor], [Jon], [Ath], [Burb], [En], [A], [E], [I], [U], [Hab], [Bloo], [Ena], [Dit], [Aph], [Ern], [Bor], [Dav], [Id], [Toast], [Son], [For], [Wen], [Lob], [Van], [Zap], [Ear], [Ben], [Don], [Bran], [Gro], [Jen], [Bob], [Ette], [Ere], [Man], [Qua], [Bro], [Cree], [Per], [Skel], [Ton], [Zom], [Bie], [Wolf], [End], [Er], [Pig], [Sil], [Ver], [Fish], [Cow], [Chic], [Ken], [Sheep], [Squid], [Hell], [Dra], [Gor], [Nyx], [Fae], [Lux], [Vex], [Hex], [Rune], [Frost], [Flame], [Storm], [Shade], [Dawn], [Dusk], [Ash], [Mist], [Might], [Fury], [Rage], [Doom], [Grim], [Void], [Rend], [Slay], [Ar], [Or], [Ur], [El], [Al], [Im], [Un], [En], [Ix], [Ox], [Dire], [Dark], [Bright], [Swift], [Glow], [Shine], [Gleam], [Spark], [Gun]
+    S:"Name Parts" <
+        Prim
+        Morb
+        Ius
+        Kat
+        Chel
+        Bing
+        Darsh
+        Jank
+        Dark
+        Osto
+        Grab
+        Thar
+        Ger
+        Ald
+        Mas
+        On
+        O
+        Din
+        Thor
+        Jon
+        Ath
+        Burb
+        En
+        A
+        E
+        I
+        U
+        Hab
+        Bloo
+        Ena
+        Dit
+        Aph
+        Ern
+        Bor
+        Dav
+        Id
+        Toast
+        Son
+        For
+        Wen
+        Lob
+        Van
+        Zap
+        Ear
+        Ben
+        Don
+        Bran
+        Gro
+        Jen
+        Bob
+        Ette
+        Ere
+        Man
+        Qua
+        Bro
+        Cree
+        Per
+        Skel
+        Ton
+        Zom
+        Bie
+        Wolf
+        End
+        Er
+        Pig
+        Sil
+        Ver
+        Fish
+        Cow
+        Chic
+        Ken
+        Sheep
+        Squid
+        Hell
+        Dra
+        Gor
+        Nyx
+        Fae
+        Lux
+        Vex
+        Hex
+        Rune
+        Frost
+        Flame
+        Storm
+        Shade
+        Dawn
+        Dusk
+        Ash
+        Mist
+        Might
+        Fury
+        Rage
+        Doom
+        Grim
+        Void
+        Rend
+        Slay
+        Ar
+        Or
+        Ur
+        El
+        Al
+        Im
+        Un
+        En
+        Ix
+        Ox
+        Dire
+        Dark
+        Bright
+        Swift
+        Glow
+        Shine
+        Gleam
+        Spark
+        Gun
+     >
+
+    # A list of prefixes, which are used in the generation of boss names. May be empty.
+    # Default: [Dr. Michael], [Sir], [Mister], [Madam], [Doctor], [Father], [Mother], [Poppa], [Lord], [Lady], [Overseer], [Professor], [Mr.], [Mr. President], [Duke], [Duchess], [Dame], [The Honorable], [Chancellor], [Vice-Chancellor], [His Holiness], [Reverend], [Count], [Viscount], [Earl], [Captain], [Major], [General], [Senpai], [Discount]
+    S:Prefixes <
+        Dr. Michael
+        Sir
+        Mister
+        Madam
+        Doctor
+        Father
+        Mother
+        Poppa
+        Lord
+        Lady
+        Overseer
+        Professor
+        Mr.
+        Mr. President
+        Duke
+        Duchess
+        Dame
+        The Honorable
+        Chancellor
+        Vice-Chancellor
+        His Holiness
+        Reverend
+        Count
+        Viscount
+        Earl
+        Captain
+        Major
+        General
+        Senpai
+        Discount
+     >
+
+    # A list of suffixes, which are used in the generation of boss names. A suffix is always preceeded by "The". May be empty.
+    # Default: [Morbius], [Dragonborn], [Rejected], [Mighty], [Supreme], [Superior], [Ultimate], [Lame], [Wimpy], [Curious], [Sneaky], [Pathetic], [Crying], [Eagle], [Errant], [Unholy], [Questionable], [Mean], [Hungry], [Thirsty], [Feeble], [Wise], [Sage], [Magical], [Mythical], [Legendary], [Not Very Nice], [Jerk], [Doctor], [Misunderstood], [Angry], [Knight], [Bishop], [Godly], [Special], [Toasty], [Shiny], [Shimmering], [Light], [Dark], [Odd-Smelling], [Funky], [Rock Smasher], [Son of Herobrine], [Cracked], [Sticky], [§kAlien§r], [Baby], [Manly], [Rough], [Scary], [Undoubtable], [Honest], [Non-Suspicious], [Boring], [Odd], [Lazy], [Super], [Nifty], [Ogre Slayer], [Pig Thief], [Dirt Digger], [Really Cool], [Doominator], [... Something], [Extra-Fishy], [Gorilla Slaughterer], [Marbles Winner], [AC Rizzlord], [President], [Burger Chef], [Professional Animator], [Cheese Sprayer], [Happiness Advocate], [Ghost Hunter], [Head of Potatoes], [Ninja], [Warrior], [Pyromancer], [Trombone Player], [Airport Technician], [Grand Magistrix], [Starved], [Terrifying], [Expert Cloud Watcher], [Cookie Enthusiast], [Grass Toucher], [Coffee Addict], [Mildly Confused], [Conveyor Belt Technician], [Subpar Lawyer]
+    S:Suffixes <
+        Morbius
+        Dragonborn
+        Rejected
+        Mighty
+        Supreme
+        Superior
+        Ultimate
+        Lame
+        Wimpy
+        Curious
+        Sneaky
+        Pathetic
+        Crying
+        Eagle
+        Errant
+        Unholy
+        Questionable
+        Mean
+        Hungry
+        Thirsty
+        Feeble
+        Wise
+        Sage
+        Magical
+        Mythical
+        Legendary
+        Not Very Nice
+        Jerk
+        Doctor
+        Misunderstood
+        Angry
+        Knight
+        Bishop
+        Godly
+        Special
+        Toasty
+        Shiny
+        Shimmering
+        Light
+        Dark
+        Odd-Smelling
+        Funky
+        Rock Smasher
+        Son of Herobrine
+        Cracked
+        Sticky
+        §kAlien§r
+        Baby
+        Manly
+        Rough
+        Scary
+        Undoubtable
+        Honest
+        Non-Suspicious
+        Boring
+        Odd
+        Lazy
+        Super
+        Nifty
+        Ogre Slayer
+        Pig Thief
+        Dirt Digger
+        Really Cool
+        Doominator
+        ... Something
+        Extra-Fishy
+        Gorilla Slaughterer
+        Marbles Winner
+        AC Rizzlord
+        President
+        Burger Chef
+        Professional Animator
+        Cheese Sprayer
+        Happiness Advocate
+        Ghost Hunter
+        Head of Potatoes
+        Ninja
+        Warrior
+        Pyromancer
+        Trombone Player
+        Airport Technician
+        Grand Magistrix
+        Starved
+        Terrifying
+        Expert Cloud Watcher
+        Cookie Enthusiast
+        Grass Toucher
+        Coffee Addict
+        Mildly Confused
+        Conveyor Belt Technician
+        Subpar Lawyer
+     >
+}
+
+
+items {
+    # A list of root names for helms, used in the generation of item names. May not be empty.
+    # Default: [Helmet], [Cap], [Crown], [Great Helm], [Bassinet], [Sallet], [Close Helm], [Barbute]
+    S:Helms <
+        Helmet
+        Cap
+        Crown
+        Great Helm
+        Bassinet
+        Sallet
+        Close Helm
+        Barbute
+     >
+
+    # A list of root names for chestplates, used in the generation of item names. May not be empty.
+    # Default: [Chestplate], [Tunic], [Brigandine], [Hauberk], [Cuirass]
+    S:chestplates <
+        Chestplate
+        Tunic
+        Brigandine
+        Hauberk
+        Cuirass
+     >
+
+    # A list of root names for leggings, used in the generation of item names. May not be empty.
+    # Default: [Leggings], [Pants], [Tassets], [Cuisses], [Schynbalds]
+    S:leggings <
+        Leggings
+        Pants
+        Tassets
+        Cuisses
+        Schynbalds
+     >
+
+    # A list of root names for boots, used in the generation of item names. May not be empty.
+    # Default: [Boots], [Shoes], [Greaves], [Sabatons], [Sollerets]
+    S:boots <
+        Boots
+        Shoes
+        Greaves
+        Sabatons
+        Sollerets
+     >
+
+    # A list of root names for swords, used in the generation of item names. May not be empty.
+    # Default: [Sword], [Cutter], [Slicer], [Dicer], [Knife], [Blade], [Machete], [Brand], [Claymore], [Cutlass], [Foil], [Dagger], [Glaive], [Rapier], [Saber], [Scimitar], [Shortsword], [Longsword], [Broadsword], [Calibur]
+    S:swords <
+        Sword
+        Cutter
+        Slicer
+        Dicer
+        Knife
+        Blade
+        Machete
+        Brand
+        Claymore
+        Cutlass
+        Foil
+        Dagger
+        Glaive
+        Rapier
+        Saber
+        Scimitar
+        Shortsword
+        Longsword
+        Broadsword
+        Calibur
+     >
+
+    # A list of root names for axes, used in the generation of item names. May not be empty.
+    # Default: [Axe], [Chopper], [Hatchet], [Tomahawk], [Cleaver], [Hacker], [Tree-Cutter], [Truncator]
+    S:axes <
+        Axe
+        Chopper
+        Hatchet
+        Tomahawk
+        Cleaver
+        Hacker
+        Tree-Cutter
+        Truncator
+     >
+
+    # A list of root names for pickaxes, used in the generation of item names. May not be empty.
+    # Default: [Pickaxe], [Pick], [Mattock], [Rock-Smasher], [Miner]
+    S:pickaxes <
+        Pickaxe
+        Pick
+        Mattock
+        Rock-Smasher
+        Miner
+     >
+
+    # A list of root names for shovels, used in the generation of item names. May not be empty.
+    # Default: [Shovel], [Spade], [Digger], [Excavator], [Trowel], [Scoop]
+    S:shovels <
+        Shovel
+        Spade
+        Digger
+        Excavator
+        Trowel
+        Scoop
+     >
+
+    # A list of root names for bows, used in the generation of item names. May not be empty.
+    # Default: [Bow], [Shortbow], [Longbow], [Flatbow], [Recurve Bow], [Reflex Bow], [Self Bow], [Composite Bow], [Arrow-Flinger]
+    S:bows <
+        Bow
+        Shortbow
+        Longbow
+        Flatbow
+        Recurve Bow
+        Reflex Bow
+        Self Bow
+        Composite Bow
+        Arrow-Flinger
+     >
+
+    # A list of root names for shields, used in the generation of item names. May not be empty.
+    # Default: [Shield], [Buckler], [Targe], [Greatshield], [Blockade], [Bulwark], [Tower Shield], [Protector], [Aegis]
+    S:shields <
+        Shield
+        Buckler
+        Targe
+        Greatshield
+        Blockade
+        Bulwark
+        Tower Shield
+        Protector
+        Aegis
+     >
+}
+
+
+tools {
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:diamond_sword, minecraft:diamond_shovel, minecraft:diamond_pickaxe, minecraft:diamond_axe, minecraft:diamond_hoe, betterend:diamond_hammer, farmersdelight:diamond_knife, alexscaves:desolate_dagger, simplyswords:diamond_longsword, simplyswords:diamond_twinblade, simplyswords:diamond_rapier, simplyswords:diamond_katana, simplyswords:diamond_sai, simplyswords:diamond_spear, simplyswords:diamond_glaive, simplyswords:diamond_warglaive, simplyswords:diamond_cutlass, simplyswords:diamond_claymore, simplyswords:diamond_greathammer, simplyswords:diamond_greataxe, simplyswords:diamond_chakram, simplyswords:diamond_scythe, simplyswords:diamond_halberd
+    # 
+    # Default: [
+    S:DIAMOND <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:netherite_reinforced_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_netherite_reinforced_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:glacite_sword, eternal_starlight:glacite_pickaxe, eternal_starlight:glacite_axe, eternal_starlight:glacite_hoe, eternal_starlight:glacite_shovel, eternal_starlight:glacite_scythe
+    # 
+    # Default: [
+    S:GLACITE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:netherite_sword, minecraft:netherite_shovel, minecraft:netherite_pickaxe, minecraft:netherite_axe, minecraft:netherite_hoe, betterend:netherite_hammer, farmersdelight:netherite_knife, simplyswords:netherite_longsword, simplyswords:netherite_twinblade, simplyswords:netherite_rapier, simplyswords:netherite_katana, simplyswords:netherite_sai, simplyswords:netherite_spear, simplyswords:netherite_glaive, simplyswords:netherite_warglaive, simplyswords:netherite_cutlass, simplyswords:netherite_claymore, simplyswords:netherite_greathammer, simplyswords:netherite_greataxe, simplyswords:netherite_chakram, simplyswords:netherite_scythe, simplyswords:netherite_halberd
+    # 
+    # Default: [
+    S:NETHERITE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: deeperdarker:resonarium_shovel, deeperdarker:resonarium_pickaxe, deeperdarker:resonarium_axe, deeperdarker:resonarium_hoe, deeperdarker:resonarium_sword
+    # 
+    # Default: [
+    S:RESONARIUM <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:thallasium_shovel, betterend:thallasium_sword, betterend:thallasium_pickaxe, betterend:thallasium_axe, betterend:thallasium_hoe, betterend:thallasium_hammer
+    # 
+    # Default: [
+    S:THALLASIUM <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:nether_ruby_pickaxe, betternether:nether_ruby_axe, betternether:nether_ruby_shovel, betternether:nether_ruby_hoe, betternether:nether_ruby_sword
+    # 
+    # Default: [
+    S:NETHER_RUBY <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:netherite_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_netherite_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:stone_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_stone_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:diamond_destructor_hammer
+    # 
+    # Default: [
+    S:justhammers_diamond_destructor_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:bloodthirster, soulsweapons:darkin_blade
+    # 
+    # Default: [
+    S:CRIMSON_INGOT <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:unrealium_sword, eternal_starlight:unrealium_pickaxe, eternal_starlight:unrealium_axe, eternal_starlight:unrealium_hoe, eternal_starlight:unrealium_shovel, eternal_starlight:unrealium_sickle
+    # 
+    # Default: [
+    S:UNREALIUM <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_emerald_axe, advancednetherite:netherite_emerald_hoe, advancednetherite:netherite_emerald_pickaxe, advancednetherite:netherite_emerald_shovel, advancednetherite:netherite_emerald_sword
+    # 
+    # Default: [
+    S:NETHERITE_EMERALD <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:diamond_reinforced_hammer
+    # 
+    # Default: [
+    S:justhammers_diamond_reinforced_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:katana_netherite, samurai_dynasty:wakizashi_netherite, samurai_dynasty:naginata_netherite, samurai_dynasty:nagamaki_netherite, samurai_dynasty:shuko_netherite, samurai_dynasty:tetsubo_netherite, samurai_dynasty:odachi_netherite, samurai_dynasty:tonbukiri_netherite, samurai_dynasty:kamayari_netherite, samurai_dynasty:kunai_netherite, samurai_dynasty:kama_netherite, samurai_dynasty:sai_netherite, samurai_dynasty:masakari_netherite, samurai_dynasty:kabutowari_netherite
+    # 
+    # Default: [
+    S:samurai_dynasty_katana_netherite <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:golden_sword, minecraft:golden_shovel, minecraft:golden_pickaxe, minecraft:golden_axe, minecraft:golden_hoe, betterend:golden_hammer, farmersdelight:golden_knife, simplyswords:gold_longsword, simplyswords:gold_twinblade, simplyswords:gold_rapier, simplyswords:gold_katana, simplyswords:gold_sai, simplyswords:gold_spear, simplyswords:gold_glaive, simplyswords:gold_warglaive, simplyswords:gold_cutlass, simplyswords:gold_claymore, simplyswords:gold_greathammer, simplyswords:gold_greataxe, simplyswords:gold_chakram, simplyswords:gold_scythe, simplyswords:gold_halberd
+    # 
+    # Default: [
+    S:GOLD <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:jawbreaker
+    # 
+    # Default: [
+    S:JAWBREAKER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:excalibur
+    # 
+    # Default: [
+    S:ECHO_SHARD <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:rage_of_stars, eternal_starlight:gravity_pickaxe
+    # 
+    # Default: [
+    S:AETHERSENT <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:gold_reinforced_hammer
+    # 
+    # Default: [
+    S:justhammers_gold_reinforced_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:jade_sword, mythicupgrades:jade_pickaxe, mythicupgrades:jade_axe, mythicupgrades:jade_shovel, mythicupgrades:jade_hoe
+    # 
+    # Default: [
+    S:JADE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_iron_axe, advancednetherite:netherite_iron_hoe, advancednetherite:netherite_iron_pickaxe, advancednetherite:netherite_iron_shovel, advancednetherite:netherite_iron_sword
+    # 
+    # Default: [
+    S:NETHERITE_IRON <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:shatterspike
+    # 
+    # Default: [
+    S:SHATTERSPIKE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:wooden_sword, minecraft:wooden_shovel, minecraft:wooden_pickaxe, minecraft:wooden_axe, minecraft:wooden_hoe, simplyswords:sword_on_a_stick
+    # 
+    # Default: [
+    S:WOOD <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: simplyswords:runic_longsword, simplyswords:runic_twinblade, simplyswords:runic_rapier, simplyswords:runic_katana, simplyswords:runic_sai, simplyswords:runic_spear, simplyswords:runic_glaive, simplyswords:runic_warglaive, simplyswords:runic_cutlass, simplyswords:runic_claymore, simplyswords:runic_chakram, simplyswords:runic_greataxe, simplyswords:runic_greathammer, simplyswords:runic_scythe, simplyswords:runic_halberd
+    # 
+    # Default: [
+    S:RUNIC <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:tempest_trident
+    # 
+    # Default: [
+    S:TEMPEST_TRIDENT <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: deeperdarker:warden_shovel, deeperdarker:warden_pickaxe, deeperdarker:warden_axe, deeperdarker:warden_hoe, deeperdarker:warden_sword
+    # 
+    # Default: [
+    S:WARDEN <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:netherite_hammer
+    # 
+    # Default: [
+    S:justhammers_netherite_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:flaming_ruby_pickaxe, betternether:flaming_ruby_axe, betternether:flaming_ruby_shovel, betternether:flaming_ruby_hoe, betternether:flaming_ruby_sword
+    # 
+    # Default: [
+    S:FLAMING_RUBY <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:deepsilver_sword, eternal_starlight:deepsilver_pickaxe, eternal_starlight:deepsilver_axe, eternal_starlight:deepsilver_hoe, eternal_starlight:deepsilver_shovel, eternal_starlight:deepsilver_sickle, eternal_starlight:shattered_sword
+    # 
+    # Default: [
+    S:DEEPSILVER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:iron_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_iron_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:coldsnap, eternal_starlight:energy_sword, eternal_starlight:golem_steel_greatsword, eternal_starlight:energy_boomerang, eternal_starlight:underminer, eternal_starlight:crystal_greatsword
+    # 
+    # Default: [
+    S:GOLEM_STEEL <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:netherite_destructor_hammer
+    # 
+    # Default: [
+    S:justhammers_netherite_destructor_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:citrine_sword, mythicupgrades:citrine_pickaxe, mythicupgrades:citrine_axe, mythicupgrades:citrine_shovel, mythicupgrades:citrine_hoe
+    # 
+    # Default: [
+    S:CITRINE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:diamond_hammer
+    # 
+    # Default: [
+    S:justhammers_diamond_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:moonring_greatsword, eternal_starlight:petal_scythe
+    # 
+    # Default: [
+    S:PETAL <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:ruby_sword, mythicupgrades:ruby_pickaxe, mythicupgrades:ruby_axe, mythicupgrades:ruby_shovel, mythicupgrades:ruby_hoe
+    # 
+    # Default: [
+    S:RUBY <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:aeternium_shovel, betterend:aeternium_sword, betterend:aeternium_pickaxe, betterend:aeternium_axe, betterend:aeternium_hoe, betterend:aeternium_hammer
+    # 
+    # Default: [
+    S:AETERNIUM <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:shatterblade
+    # 
+    # Default: [
+    S:SHATTERBLADE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:diamond_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_diamond_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:tentacle_spike
+    # 
+    # Default: [
+    S:TENTACLE_SPIKE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_diamond_axe, advancednetherite:netherite_diamond_hoe, advancednetherite:netherite_diamond_pickaxe, advancednetherite:netherite_diamond_shovel, advancednetherite:netherite_diamond_sword
+    # 
+    # Default: [
+    S:NETHERITE_DIAMOND <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:amaramber_sword, eternal_starlight:amaramber_pickaxe, eternal_starlight:amaramber_axe, eternal_starlight:amaramber_hoe, eternal_starlight:amaramber_shovel, eternal_starlight:amaramber_sickle, eternal_starlight:candlash
+    # 
+    # Default: [
+    S:AMARAMBER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:stone_reinforced_hammer
+    # 
+    # Default: [
+    S:justhammers_stone_reinforced_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:whirligig_sawblade, soulsweapons:guts_sword, soulsweapons:nightfall, soulsweapons:kirkhammer, soulsweapons:silver_sword, soulsweapons:holy_greatsword, soulsweapons:simons_blade, soulsweapons:tonitrus, soulsweapons:bloodlust
+    # 
+    # Default: [
+    S:IRON_BLOCK <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:remnant_saber
+    # 
+    # Default: [
+    S:REMNANT_SABER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:gold_reinforced_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_gold_reinforced_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:gold_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_gold_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:peridot_sword, mythicupgrades:peridot_pickaxe, mythicupgrades:peridot_axe, mythicupgrades:peridot_shovel, mythicupgrades:peridot_hoe
+    # 
+    # Default: [
+    S:PERIDOT <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:terrible_fang
+    # 
+    # Default: [
+    S:TERRIBLE_FANG <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: simplyswords:brimstone_claymore, simplyswords:watcher_claymore, simplyswords:the_devourer, simplyswords:storms_edge, simplyswords:stormscale, simplyswords:ionbound_stormscale, simplyswords:stormbringer, simplyswords:bramblethorn, simplyswords:watching_warglaive, simplyswords:toxic_longsword, simplyswords:emberblade, simplyswords:hearthflame, simplyswords:soulkeeper, simplyswords:twisted_blade, simplyswords:soulstealer, simplyswords:soulrender, simplyswords:soulstalker, simplyswords:soulpyre, simplyswords:frostfall, simplyswords:molten_edge, simplyswords:livyatan, simplyswords:icewhisper, simplyswords:arcanethyst, simplyswords:thunderbrand, simplyswords:mjolnir, simplyswords:slumbering_lichblade, simplyswords:waking_lichblade, simplyswords:awakened_lichblade, simplyswords:shadowsting, simplyswords:dormant_relic, simplyswords:righteous_relic, simplyswords:tainted_relic, simplyswords:sunfire, simplyswords:harbinger, simplyswords:whisperwind, simplyswords:dreadwhisper, simplyswords:emberlash, simplyswords:waxweaver, simplyswords:hiveheart, simplyswords:stars_edge, simplyswords:wickpiercer, simplyswords:gloampiercer, simplyswords:tempest, simplyswords:flamewind, simplyswords:ribboncleaver, simplyswords:decaying_relic, simplyswords:magiscythe, simplyswords:enigma, simplyswords:magispear, simplyswords:magiblade, simplyswords:caelestis, simplyswords:dawnquiver, simplyswords:riftmane, simplyswords:wraithfang, simplyswords:wraithmaw, simplyswords:bloodwake, simplyswords:chompolotl
+    # 
+    # Default: [
+    S:UNIQUE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:bonemore, eternal_starlight:flesh_grinder, eternal_starlight:doomeden_rapier
+    # 
+    # Default: [
+    S:DOOMEDEN <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:sapphire_sword, mythicupgrades:sapphire_pickaxe, mythicupgrades:sapphire_axe, mythicupgrades:sapphire_shovel, mythicupgrades:sapphire_hoe
+    # 
+    # Default: [
+    S:SAPPHIRE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:glistering_sword, eternal_starlight:glistering_greatsword, eternal_starlight:glistering_morning_star
+    # 
+    # Default: [
+    S:GLISTERING <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:forlorn_scythe
+    # 
+    # Default: [
+    S:LOST_SOUL_DURABLE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:stone_destructor_hammer
+    # 
+    # Default: [
+    S:justhammers_stone_destructor_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:diamond_reinforced_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_diamond_reinforced_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:pungency_fruit_axe, eternal_starlight:pungency_fruit_spear
+    # 
+    # Default: [
+    S:PUNGENCY_FRUIT <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:starfire_sword, eternal_starlight:starfire_pickaxe, eternal_starlight:starfire_axe, eternal_starlight:starfire_hoe, eternal_starlight:starfire_shovel, eternal_starlight:starfire_scythe, eternal_starlight:starfire_hammer
+    # 
+    # Default: [
+    S:STARFIRE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:bluemoon_shortsword, soulsweapons:bluemoon_greatsword, soulsweapons:moonlight_shortsword, soulsweapons:moonlight_greatsword, soulsweapons:pure_moonlight_greatsword, soulsweapons:dragon_staff, soulsweapons:withered_wabbajack, soulsweapons:dragonslayer_swordspear, soulsweapons:rageblade, soulsweapons:comet_spear, soulsweapons:lich_bane, soulsweapons:draugr, soulsweapons:dawnbreaker, soulsweapons:soul_reaper, soulsweapons:leviathan_axe, soulsweapons:skofnung, soulsweapons:mjolnir, soulsweapons:freyr_sword, soulsweapons:sting, soulsweapons:featherlight, soulsweapons:crucible_sword, soulsweapons:darkin_scythe_pre, soulsweapons:darkin_scythe, soulsweapons:shadow_assassin_scythe, soulsweapons:draupnir_spear, soulsweapons:holy_moonlight_greatsword, soulsweapons:holy_moonlight_sword, soulsweapons:frostmourne, soulsweapons:master_sword, soulsweapons:nights_edge_item, soulsweapons:empowered_dawnbreaker, soulsweapons:chungus_staff, soulsweapons:dark_moon_greatsword, soulsweapons:glaive_of_hodir, soulsweapons:moonveil, soulsweapons:dragonbane, soulsweapons:supernova, soulsweapons:mehrunes_razor, soulsweapons:nightlords_sword
+    # 
+    # Default: [
+    S:MOONSTONE_OR_VERGLAS <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:iron_destructor_hammer
+    # 
+    # Default: [
+    S:justhammers_iron_destructor_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:dreadwake
+    # 
+    # Default: [
+    S:DREADWAKE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:aquamarine_sword, mythicupgrades:aquamarine_pickaxe, mythicupgrades:aquamarine_axe, mythicupgrades:aquamarine_shovel, mythicupgrades:aquamarine_hoe
+    # 
+    # Default: [
+    S:AQUAMARINE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: create:cardboard_sword
+    # 
+    # Default: [
+    S:CARDBOARD <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:cincinnasite_pickaxe_diamond, betternether:cincinnasite_axe_diamond, betternether:cincinnasite_shovel_diamond, betternether:cincinnasite_hoe_diamond, betternether:cincinnasite_sword_diamond
+    # 
+    # Default: [
+    S:CINCINNASITE_DIAMOND <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:moonstone_shovel, soulsweapons:moonstone_pickaxe, soulsweapons:moonstone_axe, soulsweapons:moonstone_hoe
+    # 
+    # Default: [
+    S:MOONSTONE_TOOL <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:iron_sword, minecraft:iron_shovel, minecraft:iron_pickaxe, minecraft:iron_axe, minecraft:iron_hoe, betterend:iron_hammer, farmersdelight:iron_knife, mobs_of_mythology:kobold_spear, simplyswords:iron_longsword, simplyswords:iron_twinblade, simplyswords:iron_rapier, simplyswords:iron_katana, simplyswords:iron_sai, simplyswords:iron_spear, simplyswords:iron_glaive, simplyswords:iron_warglaive, simplyswords:iron_cutlass, simplyswords:iron_claymore, simplyswords:iron_greathammer, simplyswords:iron_greataxe, simplyswords:iron_chakram, simplyswords:iron_scythe, simplyswords:iron_halberd, endermanoverhaul:corrupted_blade
+    # 
+    # Default: [
+    S:IRON <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:tidepiercer
+    # 
+    # Default: [
+    S:TIDEPIERCER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:thermal_springstone_sword, eternal_starlight:thermal_springstone_pickaxe, eternal_starlight:thermal_springstone_axe, eternal_starlight:thermal_springstone_hoe, eternal_starlight:thermal_springstone_shovel, eternal_starlight:thermal_springstone_scythe, eternal_starlight:thermal_springstone_hammer
+    # 
+    # Default: [
+    S:THERMAL_SPRINGSTONE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:ametrine_sword, mythicupgrades:ametrine_pickaxe, mythicupgrades:ametrine_axe, mythicupgrades:ametrine_shovel, mythicupgrades:ametrine_hoe
+    # 
+    # Default: [
+    S:AMETRINE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:stone_sword, minecraft:stone_shovel, minecraft:stone_pickaxe, minecraft:stone_axe, minecraft:stone_hoe, graveyard:bone_dagger
+    # 
+    # Default: [
+    S:STONE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:terrible_cleaver
+    # 
+    # Default: [
+    S:TERRIBLE_CLEAVER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:iron_hammer
+    # 
+    # Default: [
+    S:justhammers_iron_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:flowglaze_sword, eternal_starlight:flowglaze_pickaxe, eternal_starlight:flowglaze_axe, eternal_starlight:flowglaze_hoe, eternal_starlight:flowglaze_shovel, eternal_starlight:flowglaze_scythe
+    # 
+    # Default: [
+    S:FLOWGLAZE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:gold_hammer
+    # 
+    # Default: [
+    S:justhammers_gold_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: mythicupgrades:topaz_sword, mythicupgrades:topaz_pickaxe, mythicupgrades:topaz_axe, mythicupgrades:topaz_shovel, mythicupgrades:topaz_hoe
+    # 
+    # Default: [
+    S:TOPAZ <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:iron_reinforced_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_iron_reinforced_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:katana, samurai_dynasty:wakizashi, samurai_dynasty:naginata, samurai_dynasty:nagamaki, samurai_dynasty:shuko, samurai_dynasty:tetsubo, samurai_dynasty:odachi, samurai_dynasty:tonbukiri, samurai_dynasty:kamayari, samurai_dynasty:kunai, samurai_dynasty:kama, samurai_dynasty:sai, samurai_dynasty:masakari, samurai_dynasty:kabutowari
+    # 
+    # Default: [
+    S:samurai_dynasty_katana <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:terrible_blade
+    # 
+    # Default: [
+    S:TERRIBLE_BLADE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:netherite_reinforced_hammer
+    # 
+    # Default: [
+    S:justhammers_netherite_reinforced_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: farmersdelight:flint_knife
+    # 
+    # Default: [
+    S:farmersdelight_flint_knife <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:dagger_of_greed
+    # 
+    # Default: [
+    S:DAGGER_OF_GREED <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:iron_reinforced_hammer
+    # 
+    # Default: [
+    S:justhammers_iron_reinforced_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:malarite_sword, eternal_starlight:malarite_pickaxe, eternal_starlight:malarite_axe, eternal_starlight:malarite_hoe, eternal_starlight:malarite_shovel, eternal_starlight:malarite_sickle, eternal_starlight:malarite_spear
+    # 
+    # Default: [
+    S:MALARITE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:starlit_diamond_sword, eternal_starlight:starlit_diamond_pickaxe, eternal_starlight:starlit_diamond_axe, eternal_starlight:starlit_diamond_hoe, eternal_starlight:starlit_diamond_shovel
+    # 
+    # Default: [
+    S:STARLIT_DIAMOND <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:terminite_shovel, betterend:terminite_sword, betterend:terminite_pickaxe, betterend:terminite_axe, betterend:terminite_hoe, betterend:terminite_hammer
+    # 
+    # Default: [
+    S:TERMINITE <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:translucent_sword, soulsweapons:translucent_glaive, soulsweapons:translucent_double_greatsword
+    # 
+    # Default: [
+    S:LOST_SOUL <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:gold_destructor_hammer
+    # 
+    # Default: [
+    S:justhammers_gold_destructor_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:stone_hammer
+    # 
+    # Default: [
+    S:justhammers_stone_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_gold_axe, advancednetherite:netherite_gold_hoe, advancednetherite:netherite_gold_pickaxe, advancednetherite:netherite_gold_shovel, advancednetherite:netherite_gold_sword
+    # 
+    # Default: [
+    S:NETHERITE_GOLD <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:dagger_of_hunger
+    # 
+    # Default: [
+    S:TOOTH_OF_HUNGER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:aurora_deer_antler
+    # 
+    # Default: [
+    S:AURORA_DEER_ANTLER <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: justhammers:stone_reinforced_impact_hammer
+    # 
+    # Default: [
+    S:justhammers_stone_reinforced_impact_hammer <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:cincinnasite_pickaxe, betternether:cincinnasite_axe, betternether:cincinnasite_shovel, betternether:cincinnasite_hoe, betternether:cincinnasite_sword
+    # 
+    # Default: [
+    S:CINCINNASITE <
+     >
+}
+
+
+armors {
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:withered_chest
+    # 
+    # Default: [
+    S:soulsweapons_withered_chest <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:chaos_crown, soulsweapons:chaos_robes
+    # 
+    # Default: [
+    S:soulsweapons_chaos_crown <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:netherite_ninja_helmet, samurai_dynasty:netherite_ninja_chestplate, samurai_dynasty:netherite_ninja_boots
+    # 
+    # Default: [
+    S:samurai_dynasty_netherite_ninja_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:unrealium_helmet, eternal_starlight:unrealium_chestplate, eternal_starlight:unrealium_leggings, eternal_starlight:unrealium_boots
+    # 
+    # Default: [
+    S:eternal_starlight_unrealium_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:glacite_helmet, eternal_starlight:glacite_chestplate, eternal_starlight:glacite_leggings, eternal_starlight:glacite_boots
+    # 
+    # Default: [
+    S:eternal_starlight_glacite_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:amaramber_mask, eternal_starlight:amaramber_chestplate
+    # 
+    # Default: [
+    S:eternal_starlight_amaramber_mask <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:alchemist_mask, eternal_starlight:alchemist_robe
+    # 
+    # Default: [
+    S:eternal_starlight_alchemist_mask <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:iron_helmet, minecraft:iron_chestplate, minecraft:iron_leggings, minecraft:iron_boots, minecraft:iron_horse_armor
+    # 
+    # Default: [Iron], [Steel], [Ferrous], [Rusty], [Wrought Iron]
+    S:minecraft_iron_helmet <
+        Iron
+        Steel
+        Ferrous
+        Rusty
+        Wrought Iron
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:abyssal_tiara
+    # 
+    # Default: [
+    S:aquamirae_abyssal_tiara <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: deeperdarker:resonarium_helmet, deeperdarker:resonarium_chestplate, deeperdarker:resonarium_leggings, deeperdarker:resonarium_boots
+    # 
+    # Default: [
+    S:deeperdarker_resonarium_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:light_samurai_helmet, samurai_dynasty:light_samurai_chestplate, samurai_dynasty:light_samurai_leggings, samurai_dynasty:light_samurai_boots
+    # 
+    # Default: [
+    S:samurai_dynasty_light_samurai_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: ad_astra:jet_suit_helmet, ad_astra:jet_suit, ad_astra:jet_suit_pants, ad_astra:jet_suit_boots
+    # 
+    # Default: [
+    S:ad_astra_jet_suit_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:crystalite_helmet, betterend:crystalite_chestplate, betterend:crystalite_leggings, betterend:crystalite_boots, betterend:elytra_crystalite
+    # 
+    # Default: [
+    S:betterend_crystalite_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:enhanced_withered_chest
+    # 
+    # Default: [
+    S:soulsweapons_enhanced_withered_chest <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: create:cardboard_helmet, create:cardboard_chestplate, create:cardboard_leggings, create:cardboard_boots
+    # 
+    # Default: [
+    S:create_cardboard_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:netherite_helmet, minecraft:netherite_chestplate, minecraft:netherite_leggings, minecraft:netherite_boots, create:netherite_backtank, create:netherite_diving_helmet, create:netherite_diving_boots
+    # 
+    # Default: [Burnt], [Embered], [Fiery], [Hellborn], [Flameforged]
+    S:minecraft_netherite_helmet <
+        Burnt
+        Embered
+        Fiery
+        Hellborn
+        Flameforged
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:chainmail_helmet, minecraft:chainmail_chestplate, minecraft:chainmail_leggings, minecraft:chainmail_boots
+    # 
+    # Default: [Chainmail], [Chain], [Chain Link], [Scale]
+    S:minecraft_chainmail_helmet <
+        Chainmail
+        Chain
+        Chain Link
+        Scale
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:thermal_springstone_helmet, eternal_starlight:thermal_springstone_chestplate, eternal_starlight:thermal_springstone_leggings, eternal_starlight:thermal_springstone_boots
+    # 
+    # Default: [
+    S:eternal_starlight_thermal_springstone_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:terrible_helmet, aquamirae:terrible_chestplate, aquamirae:terrible_leggings, aquamirae:terrible_boots
+    # 
+    # Default: [
+    S:aquamirae_terrible_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:starlit_diamond_helmet, eternal_starlight:starlit_diamond_chestplate, eternal_starlight:starlit_diamond_leggings, eternal_starlight:starlit_diamond_boots
+    # 
+    # Default: [
+    S:eternal_starlight_starlit_diamond_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: endermanoverhaul:badlands_hood, endermanoverhaul:savanna_hood, endermanoverhaul:snowy_hood
+    # 
+    # Default: [
+    S:endermanoverhaul_badlands_hood <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: deeperdarker:warden_helmet, deeperdarker:warden_chestplate, deeperdarker:warden_leggings, deeperdarker:warden_boots
+    # 
+    # Default: [
+    S:deeperdarker_warden_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:leather_helmet, minecraft:leather_chestplate, minecraft:leather_leggings, minecraft:leather_boots, minecraft:leather_horse_armor
+    # 
+    # Default: [Leather], [Rawhide], [Lamellar], [Cow Skin]
+    S:minecraft_leather_helmet <
+        Leather
+        Rawhide
+        Lamellar
+        Cow Skin
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:chaos_helmet, soulsweapons:arkenplate
+    # 
+    # Default: [
+    S:soulsweapons_chaos_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:cincinnasite_helmet, betternether:cincinnasite_chestplate, betternether:cincinnasite_leggings, betternether:cincinnasite_boots
+    # 
+    # Default: [
+    S:betternether_cincinnasite_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_emerald_helmet, advancednetherite:netherite_emerald_chestplate, advancednetherite:netherite_emerald_leggings, advancednetherite:netherite_emerald_boots
+    # 
+    # Default: [
+    S:advancednetherite_netherite_emerald_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_iron_helmet, advancednetherite:netherite_iron_chestplate, advancednetherite:netherite_iron_leggings, advancednetherite:netherite_iron_boots
+    # 
+    # Default: [
+    S:advancednetherite_netherite_iron_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: create:copper_backtank, create:copper_diving_helmet, create:copper_diving_boots
+    # 
+    # Default: [
+    S:create_copper_backtank <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:diamond_helmet, minecraft:diamond_chestplate, minecraft:diamond_leggings, minecraft:diamond_boots, minecraft:diamond_horse_armor
+    # 
+    # Default: [Diamond], [Zircon], [Gemstone], [Jewel], [Crystal]
+    S:minecraft_diamond_helmet <
+        Diamond
+        Zircon
+        Gemstone
+        Jewel
+        Crystal
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:flaming_ruby_helmet, betternether:flaming_ruby_chestplate, betternether:flaming_ruby_leggings, betternether:flaming_ruby_boots
+    # 
+    # Default: [
+    S:betternether_flaming_ruby_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:turtle_helmet
+    # 
+    # Default: [Tortollan], [Very Tragic], [Environmental], [Organic]
+    S:minecraft_turtle_helmet <
+        Tortollan
+        Very Tragic
+        Environmental
+        Organic
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: ad_astra:space_helmet, ad_astra:space_suit, ad_astra:space_pants, ad_astra:space_boots
+    # 
+    # Default: [
+    S:ad_astra_space_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:abyssal_heaume, aquamirae:abyssal_brigandine, aquamirae:abyssal_leggings, aquamirae:abyssal_boots
+    # 
+    # Default: [
+    S:aquamirae_abyssal_heaume <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betternether:nether_ruby_helmet, betternether:nether_ruby_chestplate, betternether:nether_ruby_leggings, betternether:nether_ruby_boots
+    # 
+    # Default: [
+    S:betternether_nether_ruby_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:straw_hat
+    # 
+    # Default: [
+    S:samurai_dynasty_straw_hat <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:salvager_helmet
+    # 
+    # Default: [
+    S:aquamirae_salvager_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:terminite_helmet, betterend:terminite_chestplate, betterend:terminite_leggings, betterend:terminite_boots
+    # 
+    # Default: [
+    S:betterend_terminite_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:master_samurai_helmet, samurai_dynasty:master_samurai_chestplate, samurai_dynasty:master_samurai_leggings, samurai_dynasty:master_samurai_boots
+    # 
+    # Default: [
+    S:samurai_dynasty_master_samurai_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:air_sac_mask, eternal_starlight:air_sac_boots
+    # 
+    # Default: [
+    S:eternal_starlight_air_sac_mask <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:wolf_armor
+    # 
+    # Default: [
+    S:minecraft_wolf_armor <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_gold_helmet, advancednetherite:netherite_gold_chestplate, advancednetherite:netherite_gold_leggings, advancednetherite:netherite_gold_boots
+    # 
+    # Default: [
+    S:advancednetherite_netherite_gold_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: minecraft:golden_helmet, minecraft:golden_chestplate, minecraft:golden_leggings, minecraft:golden_boots, minecraft:golden_horse_armor
+    # 
+    # Default: [Golden], [Gold], [Gilt], [Auric], [Ornate]
+    S:minecraft_golden_helmet <
+        Golden
+        Gold
+        Gilt
+        Auric
+        Ornate
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:ninja_leggings, samurai_dynasty:kimono
+    # 
+    # Default: [
+    S:samurai_dynasty_ninja_leggings <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:soul_robes_helmet, soulsweapons:soul_robes_chestplate, soulsweapons:soul_robes_leggings, soulsweapons:soul_robes_boots
+    # 
+    # Default: [
+    S:soulsweapons_soul_robes_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: ad_astra:netherite_space_helmet, ad_astra:netherite_space_suit, ad_astra:netherite_space_pants, ad_astra:netherite_space_boots
+    # 
+    # Default: [
+    S:ad_astra_netherite_space_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:deepsilver_helmet, eternal_starlight:deepsilver_chestplate, eternal_starlight:deepsilver_leggings, eternal_starlight:deepsilver_boots
+    # 
+    # Default: [
+    S:eternal_starlight_deepsilver_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: advancednetherite:netherite_diamond_helmet, advancednetherite:netherite_diamond_chestplate, advancednetherite:netherite_diamond_leggings, advancednetherite:netherite_diamond_boots
+    # 
+    # Default: [
+    S:advancednetherite_netherite_diamond_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:enhanced_arkenplate
+    # 
+    # Default: [
+    S:soulsweapons_enhanced_arkenplate <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: eternal_starlight:aethersent_hood, eternal_starlight:aethersent_cape, eternal_starlight:aethersent_bottoms, eternal_starlight:aethersent_boots
+    # 
+    # Default: [
+    S:eternal_starlight_aethersent_hood <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:steel_samurai_helmet, samurai_dynasty:steel_samurai_chestplate, samurai_dynasty:steel_samurai_leggings, samurai_dynasty:steel_samurai_boots, samurai_dynasty:steel_helmet, samurai_dynasty:steel_chestplate, samurai_dynasty:steel_leggings, samurai_dynasty:steel_boots
+    # 
+    # Default: [
+    S:samurai_dynasty_steel_samurai_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:aeternium_helmet, betterend:aeternium_chestplate, betterend:aeternium_leggings, betterend:aeternium_boots, betterend:elytra_armored
+    # 
+    # Default: [
+    S:betterend_aeternium_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: betterend:thallasium_helmet, betterend:thallasium_chestplate, betterend:thallasium_leggings, betterend:thallasium_boots
+    # 
+    # Default: [
+    S:betterend_thallasium_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:soul_ingot_helmet, soulsweapons:soul_ingot_chestplate, soulsweapons:soul_ingot_leggings, soulsweapons:soul_ingot_boots
+    # 
+    # Default: [
+    S:soulsweapons_soul_ingot_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:steel_ninja_helmet, samurai_dynasty:steel_ninja_chestplate, samurai_dynasty:steel_ninja_boots
+    # 
+    # Default: [
+    S:samurai_dynasty_steel_ninja_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: samurai_dynasty:netherite_samurai_helmet, samurai_dynasty:netherite_samurai_chestplate, samurai_dynasty:netherite_samurai_leggings, samurai_dynasty:netherite_samurai_boots
+    # 
+    # Default: [
+    S:samurai_dynasty_netherite_samurai_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: aquamirae:salvager_suit, aquamirae:salvager_waders, aquamirae:salvager_boots
+    # 
+    # Default: [
+    S:aquamirae_salvager_suit <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: soulsweapons:forlorn_helmet, soulsweapons:forlorn_chestplate, soulsweapons:forlorn_leggings, soulsweapons:forlorn_boots
+    # 
+    # Default: [
+    S:soulsweapons_forlorn_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: alexscaves:hood_of_darkness, alexscaves:cloak_of_darkness
+    # 
+    # Default: [
+    S:alexscaves_hood_of_darkness <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: alexscaves:hazmat_mask, alexscaves:hazmat_chestplate, alexscaves:hazmat_leggings, alexscaves:hazmat_boots
+    # 
+    # Default: [
+    S:alexscaves_hazmat_mask <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: alexscaves:primordial_helmet, alexscaves:primordial_tunic, alexscaves:primordial_pants
+    # 
+    # Default: [
+    S:alexscaves_primordial_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: alexscaves:gingerbread_helmet, alexscaves:gingerbread_chestplate, alexscaves:gingerbread_leggings, alexscaves:gingerbread_boots
+    # 
+    # Default: [
+    S:alexscaves_gingerbread_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: alexscaves:diving_helmet, alexscaves:diving_chestplate, alexscaves:diving_leggings, alexscaves:diving_boots
+    # 
+    # Default: [
+    S:alexscaves_diving_helmet <
+     >
+
+    # A list of material-based prefix names for this material group. May be empty.
+    # Items in this group: alexscaves:rainbounce_boots
+    # 
+    # Default: [
+    S:alexscaves_rainbounce_boots <
+     >
+}
+
+
+formatting {
+    # The format string that will be used when a suffix is applied.
+    # Default: %s the %s
+    S:"Suffix Format"=%s the %s
+
+    # The format string that will be used to indicate ownership.
+    # Default: %s's
+    S:"Ownership Format"=%s's
+}
+
+

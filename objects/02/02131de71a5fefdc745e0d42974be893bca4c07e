@@ -1,0 +1,13 @@
+{
+  "id": "natural_dark_forest",
+  "name": "Dark Forest Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:coarse_dirt",
+    "minecraft:rooted_dirt",
+    "minecraft:podzol"
+  ],
+  "slabMaterials": [
+    "minecraft:dark_oak_slab"
+  ]
+}

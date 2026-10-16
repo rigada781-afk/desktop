@@ -1,0 +1,12 @@
+{
+  "presets": [
+    {
+      "id": "layer_1791948652457",
+      "displayName": "Minecraft",
+      "description": "Custom layer preset",
+      "lastModified": 1791948671702,
+      "configFile": "layer_1791948652457.json",
+      "dimension": "overworld"
+    }
+  ]
+}

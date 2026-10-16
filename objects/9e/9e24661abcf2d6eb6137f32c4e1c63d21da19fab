@@ -1,0 +1,13 @@
+{
+  "id": "natural_cherry_grove",
+  "name": "Cherry Grove Path",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:moss_block",
+    "minecraft:coarse_dirt"
+  ],
+  "slabMaterials": [
+    "minecraft:cherry_slab"
+  ]
+}

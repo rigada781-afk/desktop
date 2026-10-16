@@ -1,0 +1,13 @@
+{
+  "id": "natural_birch_forest",
+  "name": "Birch Forest Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:coarse_dirt",
+    "minecraft:gravel"
+  ],
+  "slabMaterials": [
+    "minecraft:birch_slab"
+  ]
+}

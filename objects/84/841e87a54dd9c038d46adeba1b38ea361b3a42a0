@@ -1,0 +1,8 @@
+{
+  // How much deeper the oceans should be relative to vanilla.
+  "depth_multiplier": 2.0,
+  // Disables Trial Chamber spawning in Deep Ocean biomes.
+  "disable_deep_ocean_trial_chambers": true,
+  // How much vanilla Ocean Monuments should be offset to compensate for deeper oceans.
+  "monument_offset": -20
+}

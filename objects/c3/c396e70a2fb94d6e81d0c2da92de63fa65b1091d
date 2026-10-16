@@ -1,0 +1,53 @@
+{
+  "presets": [
+    {
+      "id": "default",
+      "displayName": "Default Colors",
+      "description": "Default cloud color progression",
+      "lastModified": 1791948414295,
+      "colors": [
+        {
+          "time": 0,
+          "color": 16767144
+        },
+        {
+          "time": 3000,
+          "color": 16777215
+        },
+        {
+          "time": 6000,
+          "color": 16777215
+        },
+        {
+          "time": 9000,
+          "color": 16054008
+        },
+        {
+          "time": 12000,
+          "color": 16752222
+        },
+        {
+          "time": 13000,
+          "color": 16757626
+        },
+        {
+          "time": 14000,
+          "color": 8029864
+        },
+        {
+          "time": 18000,
+          "color": 2764613
+        },
+        {
+          "time": 22000,
+          "color": 4871802
+        },
+        {
+          "time": 23999,
+          "color": 16767144
+        }
+      ],
+      "colorMode": "VANILLA"
+    }
+  ]
+}

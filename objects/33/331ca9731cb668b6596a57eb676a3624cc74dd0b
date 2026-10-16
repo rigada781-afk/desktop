@@ -1,0 +1,7 @@
+{
+  "enabledIntegrations": {
+    "farmersdelight": true,
+    "rechiseled": true,
+    "chipped": true
+  }
+}

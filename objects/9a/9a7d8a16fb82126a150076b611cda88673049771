@@ -1,0 +1,13 @@
+{
+  "id": "natural_meadow",
+  "name": "Meadow Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:moss_block",
+    "minecraft:coarse_dirt"
+  ],
+  "slabMaterials": [
+    "minecraft:oak_slab"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "natural_beach",
+  "name": "Beach Path",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:sand",
+    "minecraft:sandstone",
+    "minecraft:gravel"
+  ],
+  "slabMaterials": [
+    "minecraft:sandstone_slab"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "natural_jungle",
+  "name": "Jungle Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:rooted_dirt",
+    "minecraft:mud"
+  ],
+  "slabMaterials": [
+    "minecraft:jungle_slab"
+  ]
+}

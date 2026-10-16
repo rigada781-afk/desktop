@@ -1,0 +1,48 @@
+{
+  "BEVEL": {
+    "BEVEL_SIZE": 0.1,
+    "BEVEL_EDGE_SEGMENTS": 8,
+    "BEVEL_CORNER_SEGMENTS": 8
+  },
+  "APPEARANCE": {
+    "SHADING_ENABLED": false,
+    "USES_CUSTOM_ALPHA": true,
+    "CUSTOM_BRIGHTNESS": false,
+    "USES_CUSTOM_COLOR": false,
+    "BASE_ALPHA": 204,
+    "BRIGHTNESS": 1.0,
+    "LAYER_COLOR": 16777215,
+    "CLOUD_Y_SCALE": 1.0,
+    "LAYER_OFFSET_X": 100,
+    "LAYER_OFFSET_Z": 100,
+    "LAYER_SPEED_X": 0.03,
+    "LAYER_SPEED_Z": 0.03,
+    "LAYER_HEIGHT_OFFSET": 0.23,
+    "TEXTURE_NAME": "clouds",
+    "TEXTURE_NAMESPACE": "minecraft",
+    "TEXTURE_HORIZONTAL_FLIP": false,
+    "TEXTURE_VERTICAL_FLIP": false,
+    "PRESERVE_ORIGINAL_TEXTURE_COLOR": false
+  },
+  "FADE": {
+    "FADE_ENABLED": true,
+    "FADE_ALPHA": 51,
+    "TRANSITION_RANGE": 10.0,
+    "FADE_TO_COLOR": 16777215,
+    "COLOR_FADE": false,
+    "INVERTED_FADE": false,
+    "FADE_TYPE": "DYNAMIC_POSITIONAL",
+    "STATIC_FADE_REL_Y": 20.0
+  },
+  "FOG": {
+    "FOG_START_DISTANCE": 50.0,
+    "FOG_END_DISTANCE": 200.0
+  },
+  "LAYER_IDX": 1,
+  "NAME": "Minecraft",
+  "FOG_ENABLED": true,
+  "IS_ENABLED": true,
+  "LAYER_RENDERED": true,
+  "LAYER_HEIGHT": 190,
+  "MODE": "NORMAL"
+}

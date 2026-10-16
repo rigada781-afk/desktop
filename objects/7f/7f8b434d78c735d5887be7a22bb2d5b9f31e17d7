@@ -1,0 +1,13 @@
+{
+  "id": "natural_windswept_forest",
+  "name": "Windswept Forest Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:coarse_dirt",
+    "minecraft:stone",
+    "minecraft:gravel"
+  ],
+  "slabMaterials": [
+    "minecraft:oak_slab"
+  ]
+}

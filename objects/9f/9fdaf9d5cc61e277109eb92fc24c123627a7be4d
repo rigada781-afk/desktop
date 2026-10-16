@@ -1,0 +1,36 @@
+{
+  "presets": [
+    {
+      "id": "default",
+      "displayName": "Default Light Sources",
+      "description": "Default light source configuration",
+      "lastModified": 1791948414309,
+      "lights": [
+        {
+          "directionX": 0.3636965,
+          "directionY": -0.5819144,
+          "directionZ": 0.727393,
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "intensity": 0.6,
+          "useAzimuthPlane": true
+        },
+        {
+          "directionX": -0.40824834,
+          "directionY": -0.40824834,
+          "directionZ": 0.8164967,
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          },
+          "intensity": 0.5,
+          "useAzimuthPlane": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "natural_taiga",
+  "name": "Taiga Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:coarse_dirt",
+    "minecraft:podzol",
+    "minecraft:gravel"
+  ],
+  "slabMaterials": [
+    "minecraft:spruce_slab"
+  ]
+}

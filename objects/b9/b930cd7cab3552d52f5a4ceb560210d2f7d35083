@@ -1,0 +1,13 @@
+{
+  "id": "natural_snowy_beach",
+  "name": "Snowy Beach Path",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:snow_block",
+    "minecraft:sand",
+    "minecraft:gravel"
+  ],
+  "slabMaterials": [
+    "minecraft:spruce_slab"
+  ]
+}

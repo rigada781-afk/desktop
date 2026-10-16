@@ -1,0 +1,13 @@
+{
+  "id": "natural_sunflower_plains",
+  "name": "Sunflower Plains Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:dirt_path",
+    "minecraft:gravel",
+    "minecraft:coarse_dirt"
+  ],
+  "slabMaterials": [
+    "minecraft:oak_slab"
+  ]
+}

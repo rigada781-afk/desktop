@@ -1,0 +1,14 @@
+{
+  "id": "aged_stone",
+  "name": "Aged Stone",
+  "type": "ARTIFICIAL",
+  "materials": [
+    "minecraft:stone_bricks",
+    "minecraft:mossy_stone_bricks",
+    "minecraft:cracked_stone_bricks"
+  ],
+  "slabMaterials": [
+    "minecraft:stone_brick_slab",
+    "minecraft:mossy_stone_brick_slab"
+  ]
+}

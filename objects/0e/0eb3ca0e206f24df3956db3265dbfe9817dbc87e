@@ -1,0 +1,8 @@
+{
+  "showCriticalRollSkillOverlay": true,
+  "showLuckyDropSkillOverlay": true,
+  "showSkillModName": false,
+  "showTitleModName": false,
+  "sortPassive": "ByName",
+  "sortSkill": "ByLevel"
+}

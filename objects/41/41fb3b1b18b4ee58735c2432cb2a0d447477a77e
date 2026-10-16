@@ -1,0 +1,17 @@
+{
+  "presets": [
+    {
+      "id": "default",
+      "displayName": "Default Lighting",
+      "description": "Default lighting parameters",
+      "lastModified": 1791948414302,
+      "ambientStrength": 0.7,
+      "maxShadingStrength": 0.8,
+      "shadingMode": "GOURAUD",
+      "lightingType": "STATIC",
+      "dayStart": 0,
+      "dayEnd": 13000,
+      "dayNoon": 6000
+    }
+  ]
+}

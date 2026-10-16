@@ -1,0 +1,13 @@
+{
+  "id": "natural_badlands",
+  "name": "Badlands Trail",
+  "type": "NATURAL",
+  "materials": [
+    "minecraft:red_sand",
+    "minecraft:terracotta",
+    "minecraft:orange_terracotta"
+  ],
+  "slabMaterials": [
+    "minecraft:red_sandstone_slab"
+  ]
+}
