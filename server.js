@@ -40,7 +40,7 @@ function createExpressServer(appVersion) {
   app.get("/ping", (req, res) => {
     res.json({
       installed: true,
-      app: "vumeto-desktop",
+      app: "aniverse-desktop",
       version: appVersion,
       platform: process.platform,
     });
@@ -53,13 +53,22 @@ function createExpressServer(appVersion) {
   });
 
   // ── /update-discord-rpc ── update the discord RPC ───────────────────────────
+  // The Discord routes change the user's profile: only the site may call
+  // them. Any other website could post a form here (a form needs no CORS
+  // preflight), so the Origin must be the site's, and the update JSON.
+  const fromSite = (req) => req.get("origin") === new URL(config.APP_URL).origin;
+
   app.post("/update-discord-rpc", async (req, res) => {
+    if (!fromSite(req) || !req.is("application/json")) {
+      return res.status(403).json({ success: false, error: "forbidden" });
+    }
     const { name, episode, id } = req.body;
     const result = await updateDiscordRPC({ name, episode, id });
     res.json(result);
   });
 
   app.post("/clear-discord-rpc", async (req, res) => {
+    if (!fromSite(req)) return res.status(403).json({ success: false, error: "forbidden" });
     await clearDiscordRPC();
     res.json({ success: true });
   });
@@ -118,7 +127,7 @@ function buildUserAgent(version) {
       : process.platform === "darwin"
         ? "Macintosh"
         : "Linux";
-  return `VumetoDesktop/${version} (${platform}) Electron`;
+  return `AniverseDesktop/${version} (${platform}) Electron`;
 }
 
 function buildExtraHeaders(version) {
@@ -138,7 +147,7 @@ function startExpressServer(appVersion) {
     const app = createExpressServer(appVersion);
     const server = app.listen(config.EXPRESS_PORT, "127.0.0.1", () => {
       console.log(
-        `[express] Vumeto background server running on http://127.0.0.1:${config.EXPRESS_PORT}`,
+        `[express] Aniverse background server running on http://127.0.0.1:${config.EXPRESS_PORT}`,
       );
       resolve(server);
     });

@@ -4,3 +4,4 @@ dist
 website-integration.js
 
 .env
+vendor

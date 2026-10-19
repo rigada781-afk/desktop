@@ -1,29 +1,33 @@
 {
-  "name": "vumeto-desktop",
-  "version": "0.2.9",
-  "description": "Vumeto Desktop App",
+  "name": "aniverse-desktop",
+  "version": "0.3.5",
+  "description": "Aniverse Desktop App",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder build --publish never",
-    "prebuild:win": "electron-rebuild",
-    "build:win": "electron-builder build --win --publish never",
-    "build:mac": "electron-builder build --mac --publish never",
-    "build:linux": "electron-builder build --linux --publish never",
-    "publish": "electron-builder build --publish always"
+    "test": "bun test",
+    "fetch-ffmpeg": "node scripts/fetch-ffmpeg.js",
+    "build": "node scripts/fetch-ffmpeg.js && electron-builder build --publish never",
+    "build:win": "node scripts/fetch-ffmpeg.js win && electron-builder build --win --publish never",
+    "build:mac": "node scripts/fetch-ffmpeg.js mac && electron-builder build --mac --publish never",
+    "build:linux": "node scripts/fetch-ffmpeg.js linux && electron-builder build --linux --publish never",
+    "publish": "node scripts/fetch-ffmpeg.js && electron-builder build --publish always"
   },
   "keywords": [],
-  "author": "Vumeto",
+  "author": "Aniverse",
   "license": "GPL-3.0",
-  "repository": "https://github.com/vumeto/desktop",
+  "repository": "https://github.com/rigada781-afk/desktop",
+  "trustedDependencies": [
+    "electron",
+    "ffmpeg-static"
+  ],
   "devDependencies": {
     "electron": "^33.4.11",
-    "electron-builder": "^24.9.1"
+    "electron-builder": "^24.9.1",
+    "ffmpeg-static": "^5.3.0"
   },
   "dependencies": {
-    "@ffmpeg/ffmpeg": "^0.12.15",
-    "@ffmpeg/util": "^0.12.2",
     "cors": "^2.8.5",
     "discord-rpc": "^4.0.1",
     "electron-store": "^8.2.0",
@@ -33,23 +37,48 @@
   },
   "build": {
     "npmRebuild": false,
-    "appId": "com.vumeto.desktop",
-    "productName": "Vumeto",
-    "copyright": "Copyright © 2026 Vumeto",
+    "appId": "com.aniverse.desktop",
+    "productName": "Aniverse",
+    "copyright": "Copyright © 2026 Aniverse",
     "icon": "assets/icon",
     "asar": true,
+    "files": [
+      "!vendor{,/**/*}",
+      "!scripts{,/**/*}",
+      "!tests{,/**/*}",
+      "!.claude{,/**/*}"
+    ],
+    "extraResources": [
+      {
+        "from": "vendor/ffmpeg/${os}-${arch}",
+        "to": "ffmpeg",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
     "protocols": [
       {
-        "name": "Vumeto",
+        "name": "Aniverse",
         "schemes": [
-          "vumeto"
+          "aniverse"
         ]
+      }
+    ],
+    "fileAssociations": [
+      {
+        "ext": "avm",
+        "name": "Chapitre Aniverse",
+        "description": "Chapitre de manga téléchargé sur Aniverse",
+        "mimeType": "application/x-aniverse-manga",
+        "role": "Viewer",
+        "icon": "assets/icons/avm/avm"
       }
     ],
     "publish": [
       {
         "provider": "github",
-        "owner": "vumeto",
+        "owner": "aniverse",
         "repo": "desktop",
         "releaseType": "release"
       }

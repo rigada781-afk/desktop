@@ -71,7 +71,8 @@
         opacity: 0;
       }
 
-      .loader svg {
+      .loader img {
+        width: 7vw;
         aspect-ratio: 1 / 1;
         animation: logo-scale 1.5s ease-out;
       }
@@ -156,7 +157,7 @@
   </head>
   <body>
     <div class="titlebar">
-      <button onclick="window.vumetoDesktop.minimize()">
+      <button onclick="window.aniverseDesktop.minimize()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -172,7 +173,7 @@
           <path d="M19.002 12L5.00001 12" />
         </svg>
       </button>
-      <button onclick="window.vumetoDesktop.maximize()">
+      <button onclick="window.aniverseDesktop.maximize()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -188,7 +189,7 @@
           />
         </svg>
       </button>
-      <button id="btn-close" onclick="window.vumetoDesktop.close()">
+      <button id="btn-close" onclick="window.aniverseDesktop.close()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -207,62 +208,11 @@
     </div>
 
     <div class="loader" id="loader">
-      <svg
-        width="7vw"
-        viewBox="0 0 60 60"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect x="22" y="17" width="16" height="13" fill="#B227E8" />
-        <path
-          d="M60 17L52.5 29.9904H37.5L30 17L37.5 4.00962H52.5L60 17Z"
-          fill="url(#paint0_linear_285_56)"
-        />
-        <path
-          d="M30 17L22.5 29.9904H7.5L0 17L7.5 4.00962H22.5L30 17Z"
-          fill="url(#paint1_linear_285_56)"
-        />
-        <path
-          d="M45 43L37.5 55.9904H22.5L15 43L22.5 30.0096H37.5L45 43Z"
-          fill="url(#paint2_linear_285_56)"
-          style="transform: translateY(-0.3px)"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_285_56"
-            x1="56.8966"
-            y1="10.5"
-            x2="35.1325"
-            y2="25.6842"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#FF61CA" />
-            <stop offset="1" stop-color="#B227E8" />
-          </linearGradient>
-          <linearGradient
-            id="paint1_linear_285_56"
-            x1="2.58621"
-            y1="9.5"
-            x2="26.9566"
-            y2="24.7315"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#F64CB2" />
-            <stop offset="1" stop-color="#CC3BFD" />
-          </linearGradient>
-          <linearGradient
-            id="paint2_linear_285_56"
-            x1="30"
-            y1="58"
-            x2="30"
-            y2="28"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stop-color="#7D21FE" />
-            <stop offset="1" stop-color="#D655F6" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <img
+        src="assets/icons/transparant/512.png"
+        alt="Aniverse"
+        draggable="false"
+      />
 
       <div class="message" id="message">
         <p>Taking longer than expected.</p>

@@ -1,30 +1,29 @@
-# Vumeto Desktop App
+# Aniverse Desktop App
 
-Electron desktop app for [vumeto.com](https://vumeto.com) with:
+Electron desktop app for [aniverse.fr](https://aniverse.fr) with:
 
 - Custom headers (`x-app: desktop`) + branded User-Agent on all requests
 - Background Express server for app detection & CORS-bypassing proxy
 - Auto-updates via GitHub Releases
-- System startup (background/tray mode)
-- Deep link support (`vumeto://`)
+- Deep link support (`aniverse://`)
 
 ---
 
 ## Project Structure
 
 ```
-vumeto-desktop/
+aniverse-desktop/
 ├── src/
 │   ├── main.js          # Electron main process
 │   ├── preload.js       # Context bridge (renderer ↔ main)
 │   ├── server.js        # Express background server
 │   ├── updater.js       # Auto-updater
 │   └── config.js        # ← Edit this to change URLs, ports, etc.
-├── assets/
-│   ├── icon.png         # App icon (512×512 recommended)
-│   ├── icon.ico         # Windows icon
-│   ├── icon.icns        # macOS icon
-│   └── tray-icon.png    # System tray icon (16×16 or 22×22)
+├── assets/icons/
+│   ├── filled/          # App icon: icon.png (1024×1024), icon.ico, icon.icns
+│   └── transparant/     # Transparent logo PNGs (16–512); 512.png is the loading screen logo
+├── logo.png             # Source: filled app icon (1024×1024)
+├── logo-tp.png          # Source: transparent logo (1024×1024)
 ├── build/
 │   └── entitlements.mac.plist
 ├── website-integration.js  # Drop into your website
@@ -39,14 +38,12 @@ vumeto-desktop/
 npm install
 ```
 
-### Add your icons
+### Icons
 
-Place these in `assets/`:
+All icons are generated from the two 1024×1024 source logos in the project root:
 
-- `icon.png` — 512×512 PNG (used on Linux + fallback)
-- `icon.ico` — Windows multi-size ICO
-- `icon.icns` — macOS ICNS
-- `tray-icon.png` — 16×16 or 22×22 PNG for the system tray
+- `logo.png` → `assets/icons/filled/icon.png`, `icon.ico` (16–256), `icon.icns` (16–1024, incl. @2x)
+- `logo-tp.png` → `assets/icons/transparant/{16,32,48,128,512}.png`
 
 ---
 
@@ -55,9 +52,9 @@ Place these in `assets/`:
 Edit `src/config.js`:
 
 ```js
-APP_URL: 'https://vumeto.com',   // URL the window loads
+APP_URL: 'https://aniverse.fr',   // URL the window loads
 EXPRESS_PORT: 57331,               // Background server port
-DEEP_LINK_PROTOCOL: 'vumeto',    // vumeto:// deep links
+DEEP_LINK_PROTOCOL: 'aniverse',    // aniverse:// deep links
 AUTO_UPDATE: true,                // Enable/disable auto-updates
 ```
 
@@ -66,8 +63,8 @@ AUTO_UPDATE: true,                // Enable/disable auto-updates
 ## Development
 
 ```bash
-npm start        # Run without startup flag (shows window)
-npm run dev      # Same but with --dev flag (disables login item)
+npm start        # Run the app
+npm run dev      # Same but with --dev flag (opens DevTools)
 ```
 
 ---
@@ -93,7 +90,7 @@ Outputs go to `dist/`.
    "publish": [{
      "provider": "github",
      "owner": "YOUR_USERNAME",
-     "repo": "vumeto-desktop"
+     "repo": "aniverse-desktop"
    }]
    ```
 
@@ -112,17 +109,17 @@ Outputs go to `dist/`.
 
 ## Deep Links
 
-The app registers the `vumeto://` protocol.
+The app registers the `aniverse://` protocol.
 
-| URL                             | Effect                                  |
-| ------------------------------- | --------------------------------------- |
-| `vumeto://open`                 | Opens/focuses the app                   |
-| `vumeto://open?path=/dashboard` | Opens app and navigates to `/dashboard` |
+| URL                               | Effect                                  |
+| --------------------------------- | --------------------------------------- |
+| `aniverse://open`                 | Opens/focuses the app                   |
+| `aniverse://open?path=/dashboard` | Opens app and navigates to `/dashboard` |
 
 From your website:
 
 ```js
-window.location.href = "vumeto://open?path=/dashboard";
+window.location.href = "aniverse://open?path=/dashboard";
 ```
 
 Or use the helper:
@@ -153,7 +150,7 @@ if (appInfo) {
 
 // Check if currently running inside Electron
 if (isRunningInDesktopApp) {
-  const version = await window.vumetoDesktop.getVersion();
+  const version = await window.aniverseDesktop.getVersion();
 }
 
 // Open the app from a browser
@@ -166,19 +163,18 @@ await openDesktopApp("/dashboard");
 app.use((req, res, next) => {
   res.locals.isDesktopApp =
     req.headers["x-app"] === "desktop" &&
-    req.headers["user-agent"]?.startsWith("VumetoDesktop/");
+    req.headers["user-agent"]?.startsWith("AniverseDesktop/");
   next();
 });
 ```
 
 ---
 
-## Startup Behavior
+## App Lifecycle
 
-- The app registers itself to run at system login via `app.setLoginItemSettings`.
-- At startup, it launches with `--startup` flag → **only the Express server starts** (no window).
-- The user can open the app from the system tray.
-- On Windows, if the user clicks `vumeto://` or the website's "Open App" button, the window appears.
+- The app behaves like a normal desktop app: it does not launch at login and has no system tray icon.
+- Closing the window quits the app (except on macOS, where it stays in the dock per platform convention).
+- The Express server runs only while the app is open.
 
 ---
 
@@ -190,6 +186,6 @@ The Express server at `http://127.0.0.1:57331` exposes:
 | ------------------- | ---------------------------------------------------------------- |
 | `GET /ping`         | App detection — returns `{ installed: true, version, platform }` |
 | `GET /open?path=/x` | Open/focus the desktop window, optionally navigate               |
-| `ANY /proxy/*`      | Transparent proxy to `https://vumeto.com`, CORS-bypassed         |
+| `ANY /proxy/*`      | Transparent proxy to `https://aniverse.fr`, CORS-bypassed        |
 
 All proxied requests forward `Origin`, `Referer`, `Cookie`, `Authorization`, and other headers.

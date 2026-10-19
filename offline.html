@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Aniverse</title>
+    <!-- The site couldn't load for want of a connection and its service
+         worker had nothing for it (a first start offline, main.js
+         did-fail-load). Once the app has been open online, the site's own
+         offline pages, with the downloads, open instead. -->
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #050004;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: white;
+        -webkit-app-region: drag;
+        -webkit-font-smoothing: antialiased;
+        position: relative;
+        overflow: hidden;
+      }
+      .titlebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        display: flex;
+        -webkit-app-region: no-drag;
+        height: 46px;
+        padding: 4px;
+      }
+      .titlebar button {
+        outline: none;
+        border: none;
+        background: transparent;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.375rem;
+        height: 100%;
+        transition: color 300ms, background-color 300ms;
+        color: oklch(0.708 0 0);
+      }
+      .titlebar button:hover {
+        color: oklch(0.985 0 0);
+        background: oklch(0.2103 0.0059 285.89);
+      }
+      #btn-close:hover {
+        color: white;
+        background: oklch(0.704 0.191 22.216);
+      }
+      main {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        max-width: 440px;
+        padding: 0 24px;
+      }
+      main img {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 24px;
+      }
+      h1 {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      p {
+        margin-top: 8px;
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 24px;
+        -webkit-app-region: no-drag;
+      }
+      .actions button {
+        height: 40px;
+        padding: 0 18px;
+        border: none;
+        border-radius: 999px;
+        font: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 200ms, transform 100ms;
+      }
+      .actions button:active {
+        transform: scale(0.97);
+      }
+      #retry {
+        background: white;
+        color: black;
+      }
+      #retry:hover {
+        background: rgba(255, 255, 255, 0.85);
+      }
+      #folder {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+      #folder:hover {
+        background: rgba(255, 255, 255, 0.16);
+      }
+      .fade-gradient {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        background: linear-gradient(180deg, transparent 0%, #2c033f 100%);
+        pointer-events: none;
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="titlebar">
+      <button aria-label="Réduire" onclick="window.aniverseDesktop.minimize()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19.002 12L5.00001 12" />
+        </svg>
+      </button>
+      <button aria-label="Agrandir" onclick="window.aniverseDesktop.maximize()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2.5 12C2.5 7.52166 2.5 5.28249 3.89124 3.89124C5.28249 2.5 7.52166 2.5 12 2.5C16.4783 2.5 18.7175 2.5 20.1088 3.89124C21.5 5.28249 21.5 7.52166 21.5 12C21.5 16.4783 21.5 18.7175 20.1088 20.1088C18.7175 21.5 16.4783 21.5 12 21.5C7.52166 21.5 5.28249 21.5 3.89124 20.1088C2.5 18.7175 2.5 16.4783 2.5 12Z" />
+        </svg>
+      </button>
+      <button id="btn-close" aria-label="Fermer" onclick="window.aniverseDesktop.close()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6L6.00081 17.9992M17.9992 18L6 6.00085" />
+        </svg>
+      </button>
+    </div>
+
+    <main>
+      <img src="assets/icons/transparant/512.png" alt="" draggable="false" />
+      <h1 id="title">Vous êtes hors ligne</h1>
+      <p id="text">
+        Connectez-vous à internet pour ouvrir Aniverse. Après une première
+        ouverture en ligne, vos téléchargements restent disponibles sans
+        connexion.
+      </p>
+      <div class="actions">
+        <button id="retry" type="button">Réessayer</button>
+        <button id="folder" type="button">Ouvrir le dossier des téléchargements</button>
+      </div>
+    </main>
+
+    <div class="fade-gradient"></div>
+
+    <script>
+      // ?reason=server: the site answered with an error page (main.js)
+      if (new URLSearchParams(location.search).get("reason") === "server") {
+        document.getElementById("title").textContent = "Aniverse rencontre un problème";
+        document.getElementById("text").textContent =
+          "Le site ne répond pas pour le moment. Réessayez dans quelques instants ; vos téléchargements restent dans votre dossier.";
+      }
+      const retry = () => window.electronAPI.retryOnline();
+      document.getElementById("retry").addEventListener("click", retry);
+      document
+        .getElementById("folder")
+        .addEventListener("click", () => window.electronAPI.openDownloadFolder());
+      // Back online: the site again, by itself
+      window.addEventListener("online", () => setTimeout(retry, 1000));
+    </script>
+  </body>
+</html>
